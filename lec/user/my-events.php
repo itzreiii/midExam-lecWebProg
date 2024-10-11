@@ -14,7 +14,7 @@ $db = $database->getConnection();
 // Fetch user's registered events
 $query = "SELECT e.*, r.status 
           FROM events e 
-          JOIN registrations r ON e.id = r.event_id 
+          JOIN event_registrations r ON e.id = r.event_id 
           WHERE r.user_id = :user_id 
           ORDER BY e.date ASC";
 $stmt = $db->prepare($query);
