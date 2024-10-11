@@ -1,6 +1,6 @@
 <?php
-require_once '../models/User.php';
-require_once '../utils/Security.php';
+require_once '../src/models/User.php';
+require_once '../src/utils/Security.php';
 
 class AuthController {
     public function login($email, $password) {
