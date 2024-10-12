@@ -69,11 +69,11 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-    <name>Event Management</name>
+    <title>Event Management</title>
 </head>
 <body>
     <h1>Event Management</h1>
-    
+
     <!-- Create Event Form -->
     <h2>Create New Event</h2>
     <form method="POST">
@@ -98,6 +98,12 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
         <button type="submit">Create Event</button>
     </form>
+
+    <!-- Button to go back to the dashboard -->
+    <br><br>
+    <a href="dashboard.php">
+        <button type="button">Back to Dashboard</button>
+    </a>
 
     <!-- List of Events -->
     <h2>Existing Events</h2>
