@@ -2,6 +2,8 @@
 session_start();
 require_once '../config/database.php'; // Perhatikan path yang benar
 require_once '../includes/functions.php'; // Perhatikan
+include '../includes/header.php';
+
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -75,4 +77,5 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     <script src="../assets/js/main.js"></script> <!-- Perhatikan path yang benar -->
 </body>
+<?php include '../includes/footer.php'; ?>
 </html>

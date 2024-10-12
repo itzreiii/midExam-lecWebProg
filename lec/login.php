@@ -41,6 +41,8 @@ include 'includes/header.php';
 ?>
 
 <div class="auth-form">
+    <br />
+    <br />
     <h2 class="text-center mb-4">Login</h2>
     
     <?php if ($error): ?>
