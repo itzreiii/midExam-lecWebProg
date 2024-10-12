@@ -65,7 +65,7 @@ $query = "SELECT e.*,
           ORDER BY e.date ASC";
 $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
+ 
 <!DOCTYPE html>
 <html>
 <head>
