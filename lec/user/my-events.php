@@ -54,7 +54,7 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
                 <?php foreach ($registered_events as $event): ?>
                 <tr>
-                    <td><?= htmlspecialchars($event['title']) ?></td>
+                    <td><?= htmlspecialchars($event['name']) ?></td>
                     <td><?= $event['date'] ?></td>
                     <td><?= $event['time'] ?></td>
                     <td><?= htmlspecialchars($event['location']) ?></td>
