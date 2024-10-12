@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['name'] = $user['name'];
             
             if ($user['role'] === 'admin') {
-                redirect('/admin/dashboard.php');
+                redirect('./admin/dashboard.php');
             } else {
-                redirect('/Webprog/webprog-lecture/lec/user/my-events.php');
+                redirect('./user/my-events.php');
             }
         } else {
             $error = "Invalid password!";

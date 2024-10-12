@@ -4,8 +4,8 @@ require_once '../config/database.php';
 require_once '../includes/functions.php';
 
 // Check if user is admin
-if (!isAdmin()) {
-    header("Location: ../index.php");
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login.php");
     exit();
 }
 
@@ -16,18 +16,19 @@ $db = $database->getConnection();
 $stats = [
     'total_events' => $db->query("SELECT COUNT(*) FROM events")->fetchColumn(),
     'total_users' => $db->query("SELECT COUNT(*) FROM users WHERE role = 'user'")->fetchColumn(),
-    'total_registrations' => $db->query("SELECT COUNT(*) FROM registrations")->fetchColumn(),
+    'total_registrations' => $db->query("SELECT COUNT(*) FROM event_registrations")->fetchColumn(),
     'upcoming_events' => $db->query("SELECT COUNT(*) FROM events WHERE date >= CURDATE()")->fetchColumn()
 ];
 
-// Get recent registrations
-$query = "SELECT r.*, u.username, e.title 
-          FROM registrations r 
-          JOIN users u ON r.user_id = u.id 
+$query = "SELECT r.*, e.name 
+          FROM event_registrations r 
           JOIN events e ON r.event_id = e.id 
           ORDER BY r.registration_date DESC 
-          LIMIT 10";
+          LIMIT 10;";
+
 $recent_registrations = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+
+
 ?>
 
 <!DOCTYPE html>
