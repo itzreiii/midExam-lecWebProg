@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['event_id'])) {
     $event_id = $_POST['event_id'];
     
     // Check if already registered
-    $check_query = "SELECT id FROM event_registrations 
+    $check_query = "SELECT id FROM registrations 
                    WHERE user_id = :user_id AND event_id = :event_id";
     $stmt = $db->prepare($check_query);
     $stmt->execute([
@@ -29,18 +29,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['event_id'])) {
     
     if ($stmt->rowCount() == 0) {
         // Check event capacity
-        $capacity_query = "SELECT e.max_participants, COUNT(r.id) as registered
+        $capacity_query = "SELECT e.capacity, COUNT(r.id) as registered
                           FROM events e
-                          LEFT JOIN event_registrations r ON e.id = r.event_id
+                          LEFT JOIN registrations r ON e.id = r.event_id
                           WHERE e.id = :event_id
                           GROUP BY e.id";
         $stmt = $db->prepare($capacity_query);
         $stmt->execute([':event_id' => $event_id]);
         $capacity_info = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($capacity_info['registered'] < $capacity_info['max_participants']) {
+        if ($capacity_info['registered'] < $capacity_info['capacity']) {
             // Register user
-            $register_query = "INSERT INTO event_registrations (user_id, event_id, status) 
+            $register_query = "INSERT INTO registrations (user_id, event_id, status) 
                              VALUES (:user_id, :event_id, 'confirmed')";
             $stmt = $db->prepare($register_query);
             $stmt->execute([
@@ -72,6 +72,10 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     <title>Register for Events</title>
 </head>
 <body>
+<div>
+    <div class="container mt-4">
+    <br />
+    <br />
     <h1>Available Events</h1>
     
     <?php if (isset($message)): ?>
@@ -104,19 +108,20 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= htmlspecialchars($event['location']) ?></td>
                 <td><?= $event['max_participants'] - $event['registered_count'] ?> / <?= $event['max_participants'] ?></td>
                 <td>
-                    <?php if ($event['current_participants'] < $event['max_participants']): ?>
-                        <a href="register-event-proses.php?event_id=<?= $event['id'] ?>">
-                            <button type="button">Register</button>
-                        </a>
+                    <?php if ($event['registered_count'] < $event['max_participants']): ?>
+                        <form method="POST">
+                            <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
+                            <button type="submit">Register</button><button type="submit">Register</button>
+                        </form>
                     <?php else: ?>
                         <button disabled>Full</button>
                     <?php endif; ?>
                 </td>
-
             </tr>
             <?php endforeach; ?>
         </table>
     <?php endif; ?>
+    </div>
 
     <script>
     function confirmRegistration() {
