@@ -2,9 +2,11 @@
 session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
+include '../includes/header.php';
+
 
 // Check if user is logged in
-if (!isLoggedIn()) {
+if (!is_logged_In()) {
     header("Location: ../login.php");
     exit();
 }
@@ -57,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['event_id'])) {
 
 // Fetch available events
 $query = "SELECT e.*, 
-          (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.id) as registered_count
+          (SELECT COUNT(*) FROM event_registrations r WHERE r.event_id = e.id) as registered_count
           FROM events e 
           WHERE e.date >= CURDATE() 
           ORDER BY e.date ASC";
@@ -131,4 +133,10 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     });
     </script>
 </body>
+<?php include '../includes/footer.php'; ?>
+
 </html>
+
+
+
+

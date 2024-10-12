@@ -1,7 +1,25 @@
 <?php
 // includes/footer.php
 ?>
-    </div>
+    </div> <!-- Tutup div konten utama -->
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        footer {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+        }
+    </style>
     <footer class="bg-dark text-white mt-5 py-3">
         <div class="container text-center">
             <p>&copy; <?php echo date('Y'); ?> Event Registration System. All rights reserved.</p>

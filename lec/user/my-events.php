@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once '../config/database.php'; // Perhatikan path yang benar
+require_once '../includes/functions.php'; // Perhatikan
 
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -34,7 +35,7 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         <!-- Navigation Menu -->
         <nav>
-            <a href="../index.php">Home</a> |
+            <a href="my-events.php">Home</a> |
             <a href="register-event.php">Register for Events</a> |
             <a href="../logout.php">Logout</a>
         </nav>

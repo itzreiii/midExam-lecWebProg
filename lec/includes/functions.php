@@ -1,6 +1,6 @@
 <?php
 // includes/functions.php
-session_start();
+// session_start();
 
 function sanitize_input($data) {
     $data = trim($data);
