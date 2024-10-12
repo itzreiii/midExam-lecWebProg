@@ -72,6 +72,8 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     <title>Register for Events</title>
 </head>
 <body>
+    <br />
+    <br />
     <h1>Available Events</h1>
     
     <?php if (isset($message)): ?>
