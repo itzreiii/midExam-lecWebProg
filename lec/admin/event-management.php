@@ -4,7 +4,7 @@ require_once '../config/database.php';
 require_once '../includes/functions.php';
 
 // Check if user is admin
-if (!isAdmin()) {
+if (!is_Admin()) {
     header("Location: ../index.php");
     exit();
 }
