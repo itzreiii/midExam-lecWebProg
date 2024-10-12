@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $stmt->fetch();
         
         if (password_verify($password, $user['password'])) {
+            session_start();
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['role'] = $user['role'];
             $_SESSION['name'] = $user['name'];
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($user['role'] === 'admin') {
                 redirect('/admin/dashboard.php');
             } else {
-                redirect('./user/my-events.php');
+                redirect('/Webprog/webprog-lecture/lec/user/my-events.php');
             }
         } else {
             $error = "Invalid password!";
