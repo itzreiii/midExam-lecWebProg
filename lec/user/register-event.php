@@ -138,7 +138,3 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 <?php include '../includes/footer.php'; ?>
 
 </html>
-
-
-
-

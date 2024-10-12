@@ -29,7 +29,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link" href="./register-event.php">Home</a>
                     </li>
                     <?php if (is_logged_in()): ?>
                         <?php if (is_admin()): ?>
@@ -38,21 +38,21 @@
                             </li>
                         <?php else: ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="/user/my-events.php">My Events</a>
+                                <a class="nav-link" href="./my-events.php">My Events</a>
                             </li>
                         <?php endif; ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/user/profile.php">Profile</a>
+                            <a class="nav-link" href="./profile.php">Profile</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/logout.php">Logout</a>
+                            <a class="nav-link" href="../logout.php">Logout</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/login.php">Login</a>
+                            <a class="nav-link" href="./login.php">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/register.php">Register</a>
+                            <a class="nav-link" href="./register.php">Register</a>
                         </li>
                     <?php endif; ?>
                 </ul>
