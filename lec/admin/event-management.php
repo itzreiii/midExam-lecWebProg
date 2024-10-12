@@ -17,37 +17,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'create':
-                $query = "INSERT INTO events (title, description, date, time, location, capacity) 
-                         VALUES (:title, :description, :date, :time, :location, :capacity)";
+                $query = "INSERT INTO events (name, description, date, time, location, max_participants) 
+                         VALUES (:name, :description, :date, :time, :location, :max_participants)";
                 $stmt = $db->prepare($query);
                 $stmt->execute([
-                    ':title' => $_POST['title'],
+                    ':name' => $_POST['name'],
                     ':description' => $_POST['description'],
                     ':date' => $_POST['date'],
                     ':time' => $_POST['time'],
                     ':location' => $_POST['location'],
-                    ':capacity' => $_POST['capacity']
+                    ':max_participants' => $_POST['max_participants']
                 ]);
                 break;
 
             case 'update':
                 $query = "UPDATE events SET 
-                         title = :title, 
+                         name = :name, 
                          description = :description,
                          date = :date,
                          time = :time,
                          location = :location,
-                         capacity = :capacity 
+                         max_participants = :max_participants 
                          WHERE id = :id";
                 $stmt = $db->prepare($query);
                 $stmt->execute([
                     ':id' => $_POST['event_id'],
-                    ':title' => $_POST['title'],
+                    ':name' => $_POST['name'],
                     ':description' => $_POST['description'],
                     ':date' => $_POST['date'],
                     ':time' => $_POST['time'],
                     ':location' => $_POST['location'],
-                    ':capacity' => $_POST['capacity']
+                    ':max_participants' => $_POST['max_participants']
                 ]);
                 break;
 
@@ -69,7 +69,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Event Management</title>
+    <name>Event Management</name>
 </head>
 <body>
     <h1>Event Management</h1>
@@ -79,7 +79,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <form method="POST">
         <input type="hidden" name="action" value="create">
         <div>
-            <label>Title: <input type="text" name="title" required></label>
+            <label>name: <input type="text" name="name" required></label>
         </div>
         <div>
             <label>Description: <textarea name="description" required></textarea></label>
@@ -94,7 +94,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <label>Location: <input type="text" name="location" required></label>
         </div>
         <div>
-            <label>Capacity: <input type="number" name="capacity" required></label>
+            <label>max_participants: <input type="number" name="max_participants" required></label>
         </div>
         <button type="submit">Create Event</button>
     </form>
@@ -103,20 +103,20 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <h2>Existing Events</h2>
     <table border="1">
         <tr>
-            <th>Title</th>
+            <th>name</th>
             <th>Date</th>
             <th>Time</th>
             <th>Location</th>
-            <th>Capacity</th>
+            <th>max_participants</th>
             <th>Actions</th>
         </tr>
         <?php foreach ($events as $event): ?>
         <tr>
-            <td><?= htmlspecialchars($event['title']) ?></td>
+            <td><?= htmlspecialchars($event['name']) ?></td>
             <td><?= $event['date'] ?></td>
             <td><?= $event['time'] ?></td>
             <td><?= htmlspecialchars($event['location']) ?></td>
-            <td><?= $event['capacity'] ?></td>
+            <td><?= $event['max_participants'] ?></td>
             <td>
                 <form method="POST" style="display: inline;">
                     <input type="hidden" name="action" value="delete">
