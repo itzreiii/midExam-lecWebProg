@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 11, 2024 at 10:06 AM
+-- Generation Time: Oct 12, 2024 at 09:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -77,7 +77,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`) VALUES
-(1, 'ray', 'ray@gmail.com', '$2y$10$vCFPPlVqSlPsbApH3J0n7eI4wEGJ9FteXl1RfcxrFeV16fCZCtEe.', 'user', '2024-10-11 07:57:02');
+(1, 'ray', 'ray@gmail.com', '$2y$10$vCFPPlVqSlPsbApH3J0n7eI4wEGJ9FteXl1RfcxrFeV16fCZCtEe.', 'user', '2024-10-11 07:57:02'),
+(2, 'rafpo', 'rafpo@a.com', '$2y$10$KdW/6vmWCgeW8ihM1.x/TO2134LyU4rA2P0dOTaRKzT/y.8BWt5m2', 'user', '2024-10-11 08:57:46'),
+(3, 'rafpo2', 'rafpo2@rafpo2.com', '$2y$10$lpsRjLby4iX9iD3K9n9reO4OeDI2cyXYSkp2Y5G/KhVMyUpUiV1Tq', 'user', '2024-10-12 07:59:06');
 
 --
 -- Indexes for dumped tables
@@ -124,7 +126,7 @@ ALTER TABLE `event_registrations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
