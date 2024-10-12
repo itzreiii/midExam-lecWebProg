@@ -5,21 +5,22 @@
     <style>
         html, body {
             height: 100%;
+            margin: 0; /* add this to remove default margin */
         }
 
-        footer {
+        .main-content {
+            min-height: 100vh; /* set main content area to 100vh */
             display: flex;
             flex-direction: column;
         }
 
-        .container {
-            flex: 1;
-        }
-
         footer {
-            flex-shrink: 0;
+            flex-shrink: 0; /* prevent footer from shrinking */
         }
     </style>
+    <div class="main-content"> <!-- wrap main content in a div -->
+        <!-- your main content here -->
+    </div>
     <footer class="bg-dark text-white mt-5 py-3">
         <div class="container text-center">
             <p>&copy; <?php echo date('Y'); ?> Event Registration System. All rights reserved.</p>
