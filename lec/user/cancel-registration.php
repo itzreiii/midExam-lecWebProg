@@ -41,7 +41,7 @@ try {
     $delete_stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $delete_stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
     $delete_stmt->execute();
-
+ 
     // Redirect or display a confirmation message
     echo "<p>You have successfully canceled your registration for the event.</p>";
     echo "<a href='my-events.php'>Go back to my events</a>";

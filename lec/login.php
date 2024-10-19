@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     if ($stmt->rowCount() > 0) {
         $user = $stmt->fetch();
-        
+         
         if (password_verify($password, $user['password'])) {
             session_start();
             $_SESSION['user_id'] = $user['id'];

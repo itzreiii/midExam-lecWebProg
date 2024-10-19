@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 
 $database = new Database();
 $db = $database->getConnection();
-
+ 
 // Fetch user's registered events
 $query = "SELECT e.*, r.status 
           FROM events e 

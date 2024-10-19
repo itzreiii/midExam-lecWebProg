@@ -13,7 +13,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 // Get statistics
-$stats = [
+$stats = [ 
     'total_events' => $db->query("SELECT COUNT(*) FROM events")->fetchColumn(),
     'total_users' => $db->query("SELECT COUNT(*) FROM users WHERE role = 'user'")->fetchColumn(),
     'total_registrations' => $db->query("SELECT COUNT(*) FROM event_registrations")->fetchColumn(),

@@ -132,7 +132,7 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
                 e.preventDefault();
             }
         });
-    });
+    }); 
     </script>
 </body>
 <?php include '../includes/footer.php'; ?>

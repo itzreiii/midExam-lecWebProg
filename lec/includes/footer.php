@@ -13,7 +13,7 @@
             display: flex;
             flex-direction: column;
         }
-
+ 
         footer {
             flex-shrink: 0; /* prevent footer from shrinking */
         }

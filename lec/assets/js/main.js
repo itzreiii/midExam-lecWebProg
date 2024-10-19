@@ -15,7 +15,7 @@ function validateEventForm() {
         showError(title, 'Title must be at least 3 characters long');
         isValid = false;
     }
-    
+     
     // Date validation
     const selectedDate = new Date(date.value);
     const today = new Date();

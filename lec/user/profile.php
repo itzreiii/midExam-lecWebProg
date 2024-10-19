@@ -55,7 +55,7 @@ try {
     </div>
 
     <a href="edit-profile.php" class="btn">Edit Profile</a>
-</div>
+</div> 
 
 </body>
 </html>

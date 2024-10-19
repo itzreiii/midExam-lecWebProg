@@ -123,7 +123,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <td><?= $event['time'] ?></td>
             <td><?= htmlspecialchars($event['location']) ?></td>
             <td><?= $event['max_participants'] ?></td>
-            <td>
+            <td> 
                 <form method="POST" style="display: inline;">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="event_id" value="<?= $event['id'] ?>">

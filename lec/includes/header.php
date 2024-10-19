@@ -53,7 +53,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./register.php">Register</a>
-                        </li>
+                        </li> 
                     <?php endif; ?>
                 </ul>
             </div>

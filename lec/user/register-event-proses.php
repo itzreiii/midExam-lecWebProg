@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p>Location: <?= htmlspecialchars($event['location']) ?></p>
     <button type="submit">Confirm Registration</button>
 </form>
-
+ 
 </body>
 <?php include '../includes/footer.php'; ?>
 </html>
