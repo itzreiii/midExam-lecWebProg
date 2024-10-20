@@ -72,15 +72,15 @@ $recent_registrations = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     <h2>Recent Registrations</h2>
     <table border="1">
         <tr>
-            <th>User</th>
+            <th>User ID</th>
             <th>Event</th>
             <th>Registration Date</th>
             <th>Status</th>
         </tr>
         <?php foreach ($recent_registrations as $reg): ?>
         <tr>
-            <td><?= htmlspecialchars($reg['username']) ?></td>
-            <td><?= htmlspecialchars($reg['title']) ?></td>
+            <td><?= htmlspecialchars($reg['user_id']) ?></td>
+            <td><?= htmlspecialchars($reg['name']) ?></td>
             <td><?= $reg['registration_date'] ?></td>
             <td><?= $reg['status'] ?></td>
         </tr>
