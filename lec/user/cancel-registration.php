@@ -43,6 +43,7 @@ try {
         exit();
     }
 
+
     // Delete the registration record
     $delete_sql = "DELETE FROM event_registrations WHERE user_id = :user_id AND event_id = :event_id";
     $delete_stmt = $conn->prepare($delete_sql);
@@ -56,12 +57,31 @@ try {
     $update_stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
     $update_stmt->execute();
 
+    // Fetch the updated event details
+    $event_query = "SELECT current_participants, max_participants FROM events WHERE id = :event_id";
+    $event_stmt = $conn->prepare($event_query);
+    $event_stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+    $event_stmt->execute();
+    $event = $event_stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Check and update event status if needed
+    if ($event['current_participants'] < $event['max_participants']) {
+        $status_query = "UPDATE events SET status = 'open' WHERE id = :event_id";
+        $status_stmt = $conn->prepare($status_query);
+        $status_stmt->bindParam(':event_id', $event_id, PDO::PARAM_INT);
+        $status_stmt->execute();
+    }
+
     // Commit the transaction
     $conn->commit();
 
-    // Redirect or display a confirmation message
-    // echo "<p>You have successfully canceled your registration for the event.</p>";
-    // echo "<a href='my-events.php'>Go back to my events</a>";
+    // Display the alert and redirect using JavaScript
+    echo "<script>
+        alert('Data berhasil dihapus.');
+        window.location.href = 'my-events.php'; 
+    </script>";
+
+    exit();
 
 } catch (PDOException $e) {
     // Rollback the transaction in case of error
@@ -70,7 +90,4 @@ try {
 }
 
 // Include the footer file (if necessary)
-include_once '../includes/footer.php'; 
-
-// Success alert
-echo "<script>alert('Data berhasil dihapus.')</script>";
+include_once '../includes/footer.php';

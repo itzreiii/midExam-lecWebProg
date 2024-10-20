@@ -1,8 +1,10 @@
 <?php
+
 session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 include '../includes/header.php';
+
 
 
 // Check if user is logged in
@@ -105,11 +107,50 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= $event['time'] ?></td>
                 <td><?= htmlspecialchars($event['location']) ?></td>
                 <td><?= $event['current_participants'] ?> / <?= $event['max_participants'] ?></td>
+
+                <!-- $capacity_query = "SELECT e.max_participants, COUNT(r.id) as registered
+                          FROM events e
+                          LEFT JOIN event_registrations r ON e.id = r.event_id
+                          WHERE e.id = :event_id
+                          GROUP BY e.id";
+                $stmt = $db->prepare($capacity_query);
+                $stmt->execute([':event_id' => $event_id]); -->
+                
                 <td>
                     <?php if ($event['current_participants'] < $event['max_participants']): ?>
-                        <a href="register-event-proses.php?event_id=<?= $event['id'] ?>">
-                            <button type="button">Register</button>
-                        </a>
+                       
+                        
+                        <!-- Button trigger modal -->
+                        <!-- Button to open modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
+                            Register for Event
+                        </button>
+
+                        <!-- Modal for registration -->
+                        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="registerModalLabel">Register for Event</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-event-id="1">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="registerForm">
+                                            <input type="hidden" name="event_id" value="<?= $event_id ?>">
+                                            <p>Event: <?= htmlspecialchars($event['name']) ?></p>
+                                            <p>Description: <?= htmlspecialchars($event['description']) ?></p>
+                                            <p>Date: <?= $event['date'] ?></p>
+                                            <p>Location: <?= htmlspecialchars($event['location']) ?></p>
+                                            <button type="submit" class="btn btn-primary">Confirm Registration</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     <?php else: ?>
                         <button disabled>Full</button>
                     <?php endif; ?>
@@ -120,6 +161,37 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
         </table>
     <?php endif; ?>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#registerForm').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                $.ajax({
+                    url: 'register-event-proses.php',
+                    type: 'POST',
+                    data: {
+                        event_id: 1
+                    },
+                    success: function(response) {
+                        var res = JSON.parse(response);
+                        if (res.success) {
+                            alert(res.success);
+                            $('#registerModal').modal('hide'); // Hide modal
+                            window.location.href = 'my-events.php'; // Redirect to events page
+                        } else if (res.error) {
+                            alert(res.error); // Display error
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText); // Lihat isi respons dari server
+                        alert('Something went wrong! Please try again.');
+                    }
+
+                });
+            });
+        });
+    </script>
     <script>
     function confirmRegistration() {
         return confirm('Are you sure you want to register for this event?');

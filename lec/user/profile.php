@@ -48,17 +48,17 @@ try {
 </head>
 <body>
 
-<div class="profile-section">
-    <h2><?php echo htmlspecialchars($user['name']); ?>'s Profile</h2>
-    
-    <div class="profile-details">
-        <p><strong>Username:</strong> <?php echo htmlspecialchars($user['name']); ?></p>
-        <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-        <p><strong>Joined Date:</strong> <?php echo date('F j, Y', strtotime($user['created_at'])); ?></p>
+<div class="container">
+<h2><?php echo htmlspecialchars($user['name']); ?>'s Profile</h2>   
+    <div class="card">
+        <div class="card-body">
+            <p><strong>Username:</strong> <?php echo htmlspecialchars($user['name']); ?></p>
+            <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
+            <p><strong>Joined Date:</strong> <?php echo date('F j, Y', strtotime($user['created_at'])); ?></p>
+            <a href="edit-profile.php" class="btn btn-primary">Edit Profile</a>
+        </div>
     </div>
-
-    <a href="edit-profile.php" class="btn">Edit Profile</a>
-</div> 
+</div>
 
 </body>
 </html>
