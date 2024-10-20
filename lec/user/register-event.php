@@ -104,7 +104,7 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
                 <td><?= $event['date'] ?></td>
                 <td><?= $event['time'] ?></td>
                 <td><?= htmlspecialchars($event['location']) ?></td>
-                <td><?= $event['max_participants'] - $event['registered_count'] ?> / <?= $event['max_participants'] ?></td>
+                <td><?= $event['current_participants'] ?> / <?= $event['max_participants'] ?></td>
                 <td>
                     <?php if ($event['current_participants'] < $event['max_participants']): ?>
                         <a href="register-event-proses.php?event_id=<?= $event['id'] ?>">
