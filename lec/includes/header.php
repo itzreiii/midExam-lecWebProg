@@ -1,5 +1,6 @@
 <?php
 // includes/header.php
+include_once 'functions.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

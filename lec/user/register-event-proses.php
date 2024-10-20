@@ -20,6 +20,7 @@ if (!isset($_GET['event_id'])) {
 
 $event_id = $_GET['event_id'];
 
+
 // Fetch event details (for displaying information)
 $event_query = "SELECT * FROM events WHERE id = :event_id";
 $stmt = $db->prepare($event_query);
@@ -60,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Start a transaction to ensure data consistency
         $db->beginTransaction();
-
+    
         // Register the user for the event
         $register_query = "INSERT INTO event_registrations (user_id, event_id, status) 
                            VALUES (:user_id, :event_id, 'confirmed')";
@@ -69,19 +70,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':user_id' => $_SESSION['user_id'],
             ':event_id' => $event_id
         ]);
-
+    
         // Update the current participants count for the event
         $update_event_query = "UPDATE events 
                                SET current_participants = current_participants + 1 
                                WHERE id = :event_id";
         $stmt = $db->prepare($update_event_query);
         $stmt->execute([':event_id' => $event_id]);
-
+    
         // Re-fetch the updated event details
         $stmt = $db->prepare($capacity_query);
         $stmt->execute([':event_id' => $event_id]);
         $updated_event = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
         // Check if the event is full after the new registration
         if ($updated_event['current_participants'] >= $updated_event['max_participants']) {
             // Update the event status to "closed"
@@ -89,15 +90,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $db->prepare($close_event_query);
             $stmt->execute([':event_id' => $event_id]);
         }
-
+    
         // Commit the transaction
         $db->commit();
-
+    
         // Registration successful
         $_SESSION['success'] = "You have successfully registered for the event!";
         header("Location: my-events.php");
         exit();
-
+    
     } catch (PDOException $e) {
         // Rollback the transaction in case of any error
         $db->rollBack();
@@ -105,6 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: my-events.php");
         exit();
     }
+    
+    
 }
 ?>
 
