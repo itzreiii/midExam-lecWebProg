@@ -1,11 +1,8 @@
 <?php
-
 session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 include '../includes/header.php';
-
-
 
 // Check if user is logged in
 if (!is_logged_In()) {
@@ -67,147 +64,142 @@ $query = "SELECT e.*,
           ORDER BY e.date ASC";
 $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
  
 <!DOCTYPE html>
 <html>
 <head>
     <title>Register for Events</title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
     <div class="container">
-    <h1>Available Events</h1>
-    
-    <?php if (isset($message)): ?>
-        <div class="success"><?= $message ?></div>
-    <?php endif; ?>
-    
-    <?php if (isset($error)): ?>
-        <div class="error"><?= $error ?></div>
-    <?php endif; ?>
+        <h1>Available Events</h1>
+        
+        <?php if (isset($message)): ?>
+            <div class="success"><?= $message ?></div>
+        <?php endif; ?>
+        
+        <?php if (isset($error)): ?>
+            <div class="error"><?= $error ?></div>
+        <?php endif; ?>
 
-    <?php if (empty($events)): ?>
-        <p>No upcoming events available.</p>
-    <?php else: ?>
-        <table border="1">
-            <tr>
-                <th>Event</th>
-                <th>Description</th>
-                <th>Date</th>
-                <th>Time</th>
-                <th>Location</th>
-                <th>Available Spots</th>
-                <th>Action</th>
-            </tr>
-            <?php foreach ($events as $event): ?>
-            <tr>
-                <td><?= htmlspecialchars($event['name']) ?></td>
-                <td><?= htmlspecialchars($event['description']) ?></td>
-                <td><?= $event['date'] ?></td>
-                <td><?= $event['time'] ?></td>
-                <td><?= htmlspecialchars($event['location']) ?></td>
-                <td><?= $event['current_participants'] ?> / <?= $event['max_participants'] ?></td>
-
-                <!-- $capacity_query = "SELECT e.max_participants, COUNT(r.id) as registered
-                          FROM events e
-                          LEFT JOIN event_registrations r ON e.id = r.event_id
-                          WHERE e.id = :event_id
-                          GROUP BY e.id";
-                $stmt = $db->prepare($capacity_query);
-                $stmt->execute([':event_id' => $event_id]); -->
-                
-                <td>
-                    <?php if ($event['current_participants'] < $event['max_participants']): ?>
-                       
-                        
-                        <!-- Button trigger modal -->
-                        <!-- Button to open modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal">
-                            Register for Event
+        <?php if (empty($events)): ?>
+            <p>No upcoming events available.</p>
+        <?php else: ?>
+            <table border="1" class="table">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Location</th>
+                        <th>Available Spots</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($events as $event): ?>
+                <tr>
+                    <td><?= htmlspecialchars($event['name']) ?></td>
+                    <td><?= htmlspecialchars($event['description']) ?></td>
+                    <td><?= $event['date'] ?></td>
+                    <td><?= $event['time'] ?></td>
+                    <td><?= htmlspecialchars($event['location']) ?></td>
+                    <td><?= $event['current_participants'] ?> / <?= $event['max_participants'] ?></td>
+                    <td>
+                        <?php if ($event['current_participants'] < $event['max_participants']): ?>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-event-id="<?= $event['id'] ?>">
+                                Register for Event
+                            </button>
+                        <?php else: ?>
+                            <button disabled>Full</button>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+        
+        <!-- Modal for registration -->
+        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="registerModalLabel">Register for Event</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="registrationForm" action="register-event-proses.php" method="POST"> 
+                            <input type="hidden" id="event_id" name="event_id" value="">
+                            <p id="event_name"><strong>Event: </strong></p>
+                            <p id="event_description"><strong>Description: </strong></p>
+                            <p id="event_date"><strong>Date: </strong></p>
+                            <p id="event_location"><strong>Location: </strong></p>
+                            <button type="submit" class="btn btn-primary">Confirm Registration</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <!-- Modal for registration -->
-                        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="registerModalLabel">Register for Event</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" data-event-id="1">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="registerForm">
-                                            <input type="hidden" name="event_id" value="<?= $event_id ?>">
-                                            <p>Event: <?= htmlspecialchars($event['name']) ?></p>
-                                            <p>Description: <?= htmlspecialchars($event['description']) ?></p>
-                                            <p>Date: <?= $event['date'] ?></p>
-                                            <p>Location: <?= htmlspecialchars($event['location']) ?></p>
-                                            <button type="submit" class="btn btn-primary">Confirm Registration</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    </div>
 
-
-                    <?php else: ?>
-                        <button disabled>Full</button>
-                    <?php endif; ?>
-                </td>
-
-            </tr>
-            <?php endforeach; ?>
-        </table>
-    <?php endif; ?>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('#registerForm').submit(function(event) {
-                event.preventDefault(); // Prevent default form submission
+            // Handle opening modal with the correct event information
+            $('#registerModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var eventId = button.data('event-id'); // Extract event ID from data-* attribute
+                var eventName = button.closest('tr').find('td:nth-child(1)').text(); // Get event name
+                var eventDescription = button.closest('tr').find('td:nth-child(2)').text(); // Get event description
+                var eventDate = button.closest('tr').find('td:nth-child(3)').text(); // Get event date
+                var eventLocation = button.closest('tr').find('td:nth-child(5)').text(); // Get event location
 
+                // Update the modal's content
+                // Update the modal's content
+                $('#registerModal #event_name').html('<strong>Event: </strong>' + eventName);
+                $('#registerModal #event_description').html('<strong>Description: </strong>' + eventDescription);
+                $('#registerModal #event_date').html('<strong>Date: </strong>' + eventDate);
+                $('#registerModal #event_location').html('<strong>Location: </strong>' + eventLocation);
+
+            });
+
+            // Handle form submission
+            $('#registrationForm').on('submit', function(e) {
+                e.preventDefault(); // Prevent the default form submission
+                var formData = $(this).serialize(); // Serialize the form data
+
+                // AJAX request to register the event
                 $.ajax({
-                    url: 'register-event-proses.php',
                     type: 'POST',
-                    data: {
-                        event_id: 1
-                    },
+                    url: 'register-event-proses.php',
+                    data: formData,
+                    dataType: 'json',
                     success: function(response) {
-                        var res = JSON.parse(response);
-                        if (res.success) {
-                            alert(res.success);
-                            $('#registerModal').modal('hide'); // Hide modal
-                            window.location.href = 'my-events.php'; // Redirect to events page
-                        } else if (res.error) {
-                            alert(res.error); // Display error
+                        // Handle success or error response
+                        if (response.success) {
+                            alert(response.success);
+                            location.reload(); // Reload the page to see updated participants
+                        } else {
+                            alert(response.error);
                         }
                     },
-                    error: function(xhr, status, error) {
-                        console.log(xhr.responseText); // Lihat isi respons dari server
-                        alert('Something went wrong! Please try again.');
+                    error: function() {
+                        alert('An error occurred. Please try again.');
                     }
-
                 });
             });
         });
-    </script>
-    <script>
-    function confirmRegistration() {
-        return confirm('Are you sure you want to register for this event?');
-    }
 
-    // Add event listener to all registration forms
-    document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', function(e) {
-            if (!confirmRegistration()) {
-                e.preventDefault();
-            }
-        });
-    }); 
     </script>
-    </div>
 </body>
-<?php include '../includes/footer.php'; ?>
-
 </html>
