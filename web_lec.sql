@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2024 at 11:20 AM
+-- Generation Time: Oct 20, 2024 at 07:25 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -35,7 +35,7 @@ CREATE TABLE `events` (
   `time` time NOT NULL,
   `location` varchar(200) NOT NULL,
   `max_participants` int(11) NOT NULL,
-  `current_participants` int(11) DEFAULT 0,
+  `current_participants` int(11) NOT NULL DEFAULT 0,
   `status` enum('open','closed','canceled') DEFAULT 'open',
   `image_path` varchar(255) DEFAULT NULL,
   `banner_path` varchar(255) DEFAULT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id`, `name`, `description`, `date`, `time`, `location`, `max_participants`, `current_participants`, `status`, `image_path`, `banner_path`, `created_at`, `updated_at`) VALUES
-(1, 'asd', '123', '2030-12-12', '12:12:00', 'asd', 1, 0, 'open', NULL, NULL, '2024-10-12 08:47:01', '2024-10-12 08:47:01');
+(1, 'asd', '123', '2030-12-12', '12:12:00', 'asd', 1, 1, 'closed', NULL, NULL, '2024-10-12 08:47:01', '2024-10-20 05:14:31');
 
 -- --------------------------------------------------------
 
@@ -69,7 +69,8 @@ CREATE TABLE `event_registrations` (
 --
 
 INSERT INTO `event_registrations` (`id`, `event_id`, `user_id`, `registration_date`, `status`) VALUES
-(1, 1, 2, '2024-10-12 08:59:03', '');
+(1, 1, 2, '2024-10-12 08:59:03', ''),
+(2, 1, 3, '2024-10-20 05:14:31', '');
 
 -- --------------------------------------------------------
 
@@ -134,7 +135,7 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT for table `event_registrations`
 --
 ALTER TABLE `event_registrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
