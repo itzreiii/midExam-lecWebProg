@@ -1,8 +1,9 @@
 <?php
 // Start the session and include the necessary files
 session_start();
-include_once '../config/database.php';  // Adjust the path if needed
-include_once '../includes/header.php';  // Include the header
+include_once '../config/database.php';  // Include the database connection script
+require_once '../includes/functions.php'; // Include the functions file for is_logged_in()
+include_once '../includes/header.php';    // Include the header
 
 // Check if the user is logged in, if not redirect to the login page
 if (!isset($_SESSION['user_id'])) {
@@ -13,10 +14,14 @@ if (!isset($_SESSION['user_id'])) {
 // Get the user ID from the session
 $user_id = $_SESSION['user_id'];
 
+$database = new Database();
+$db = $database->getConnection();
+
 // Fetch the user's profile information from the database
 try {
+    // Prepare the SQL statement
     $sql = "SELECT * FROM users WHERE id = :id";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare($sql); // Ensure $conn is defined in database.php
     $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
     $stmt->execute();
     
@@ -29,7 +34,7 @@ try {
         exit();
     }
 } catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
+    echo "Error: " . $e->getMessage(); // Display error message if there's an issue
 }
 
 ?>

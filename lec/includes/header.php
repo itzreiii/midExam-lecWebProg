@@ -12,15 +12,6 @@ include_once 'functions.php';
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 <body>
-    <style>
-        nav.navbar {
-            position: fixed;
-            top: 0; 
-            left: 0;
-            width: 100%; 
-            z-index: 1000; 
-        }
-    </style>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/">Event Registration</a>
@@ -62,3 +53,5 @@ include_once 'functions.php';
     </nav>
 
     <div class="container mt-4"></div>
+</body>
+</html>
