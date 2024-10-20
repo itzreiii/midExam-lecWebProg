@@ -140,10 +140,10 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
                     <div class="modal-body">
                         <form id="registrationForm" action="register-event-proses.php" method="POST"> 
                             <input type="hidden" id="event_id" name="event_id" value="">
-                            <p id="event_name"><strong>Event: </strong></p>
-                            <p id="event_description"><strong>Description: </strong></p>
-                            <p id="event_date"><strong>Date: </strong></p>
-                            <p id="event_location"><strong>Location: </strong></p>
+                            <p id="event_name"></p>
+                            <p id="event_description"></p>
+                            <p id="event_date"></p>
+                            <p id="event_location"></p>
                             <button type="submit" class="btn btn-primary">Confirm Registration</button>
                         </form>
                     </div>
@@ -165,12 +165,11 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
                 var eventLocation = button.closest('tr').find('td:nth-child(5)').text(); // Get event location
 
                 // Update the modal's content
-                // Update the modal's content
-                $('#registerModal #event_name').html('<strong>Event: </strong>' + eventName);
-                $('#registerModal #event_description').html('<strong>Description: </strong>' + eventDescription);
-                $('#registerModal #event_date').html('<strong>Date: </strong>' + eventDate);
-                $('#registerModal #event_location').html('<strong>Location: </strong>' + eventLocation);
-
+                $('#registerModal #event_id').val(eventId); // Set the event_id in the hidden input
+                $('#registerModal #event_name').text('Name: ' + eventName);
+                $('#registerModal #event_description').text('Desc: ' + eventDescription);
+                $('#registerModal #event_date').text('Date: ' + eventDate);
+                $('#registerModal #event_location').text('Location: ' + eventLocation);
             });
 
             // Handle form submission

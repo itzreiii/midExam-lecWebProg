@@ -36,7 +36,7 @@ if (isset($_POST['event_id'])) {
         $stmt = $db->prepare($capacity_query);
         $stmt->execute([':event_id' => $event_id]);
         $event = $stmt->fetch(PDO::FETCH_ASSOC);
-
+        
         // Check if the event was found
         if (!$event) {
             echo json_encode(['error' => 'Event not found.']);
