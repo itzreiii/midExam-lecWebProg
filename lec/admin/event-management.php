@@ -17,46 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action'])) {
         switch ($_POST['action']) {
             case 'create':
-<<<<<<< HEAD
                 // Create event logic
                 break;
 
             case 'update':
                 // Update event logic
-=======
-                $query = "INSERT INTO events (name, description, date, time, location, max_participants) 
-                         VALUES (:name, :description, :date, :time, :location, :max_participants)";
-                $stmt = $db->prepare($query);
-                $stmt->execute([
-                    ':name' => $_POST['name'] ?? '',
-                    ':description' => $_POST['description'] ?? '',
-                    ':date' => $_POST['date'] ?? '',
-                    ':time' => $_POST['time'] ?? '',
-                    ':location' => $_POST['location'] ?? '',
-                    ':max_participants' => $_POST['max_participants'] ?? 0
-                ]);
-                break;
-
-            case 'update':
-                $query = "UPDATE events SET 
-                         name = :name, 
-                         description = :description,
-                         date = :date,
-                         time = :time,
-                         location = :location,
-                         max_participants = :max_participants 
-                         WHERE id = :id";
-                $stmt = $db->prepare($query);
-                $stmt->execute([
-                    ':id' => $_POST['event_id'] ?? 0,
-                    ':name' => $_POST['name'] ?? '',
-                    ':description' => $_POST['description'] ?? '',
-                    ':date' => $_POST['date'] ?? '',
-                    ':time' => $_POST['time'] ?? '',
-                    ':location' => $_POST['location'] ?? '',
-                    ':max_participants' => $_POST['max_participants'] ?? 0
-                ]);
->>>>>>> 4dab52c5a0139cec7d48c1317366af604f482fcb
                 break;
 
             case 'delete':
@@ -67,31 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $new_status = $_POST['current_status'] === 'open' ? 'closed' : 'open';
                 $query = "UPDATE events SET status = :status WHERE id = :id";
                 $stmt = $db->prepare($query);
-<<<<<<< HEAD
                 $stmt->execute([
                     ':id' => $_POST['event_id'],
                     ':status' => $new_status
                 ]);
-=======
-                $stmt->execute([':id' => $_POST['event_id'] ?? 0]);
-                break;
-                
-            case 'change_status':
-                $new_status = ($_POST['current_status'] ?? '') === 'open' ? 'closed' : 'open';
-                $query = "UPDATE events SET status = :status WHERE id = :id";
-                $stmt = $db->prepare($query);
-                $stmt->execute([
-                    ':id' => $_POST['event_id'] ?? 0,
-                    ':status' => $new_status
-                ]);
-                break;
-
-            case 'edit':
-                $query = "SELECT * FROM events WHERE id = :id";
-                $stmt = $db->prepare($query);
-                $stmt->execute([':id' => $_POST['event_id'] ?? 0]);
-                $event = $stmt->fetch(PDO::FETCH_ASSOC);
->>>>>>> 4dab52c5a0139cec7d48c1317366af604f482fcb
                 break;
         }
     }
