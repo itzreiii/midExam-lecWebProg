@@ -44,11 +44,11 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <link rel="stylesheet" href="../assets/css/styles.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Link to your CSS file -->
 </head>
 <body>
 
-<div class="profile-container">
+<div class="profile-section">
     <h2><?php echo htmlspecialchars($user['name']); ?>'s Profile</h2>
     
     <div class="profile-details">

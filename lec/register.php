@@ -42,7 +42,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include 'includes/header.php';
 ?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
+    
 <div class="auth-form">
     <h2 class="text-center mb-4">Register</h2>
     
@@ -82,3 +90,6 @@ include 'includes/header.php';
         Already have an account? <a href="login.php">Login here</a>
     </p>
 </div>
+    
+</body>
+</html>

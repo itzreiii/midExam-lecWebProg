@@ -39,7 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 include 'includes/header.php';
 ?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+<body>
 <div class="auth-form">
     <br />
     <br />
@@ -67,3 +74,5 @@ include 'includes/header.php';
         Don't have an account? <a href="register.php">Register here</a>
     </p>
 </div>
+</body>
+</html>

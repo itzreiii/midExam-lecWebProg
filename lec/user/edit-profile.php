@@ -65,23 +65,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="../assets/css/styles.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Link to your CSS file -->
 </head>
 <body>
 
-<div class="profile-container">
+<div class="profile-section">
     <h2>Edit Profile</h2>
     
     <form action="edit-profile.php" method="POST">
         <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+            <label for="username" class="form-label">Username:</label>
+            <input type="text" id="username" class="form-control"name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
         </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+        <div class="form-group pb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
         </div>
-        <button type="submit" class="btn">Update Profile</button>
+        <button type="submit" class="btn btn-primary w-10">Update Profile</button>
     </form>
 </div>
 

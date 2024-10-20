@@ -70,10 +70,10 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
     <title>Register for Events</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-    <br />
-    <br />
+    <div class="container">
     <h1>Available Events</h1>
     
     <?php if (isset($message)): ?>
@@ -134,6 +134,7 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
         });
     }); 
     </script>
+    </div>
 </body>
 <?php include '../includes/footer.php'; ?>
 
