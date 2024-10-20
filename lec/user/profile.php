@@ -13,9 +13,9 @@ if (!isset($_SESSION['user_id'])) {
 
 // Get the user ID from the session
 $user_id = $_SESSION['user_id'];
-
 $database = new Database();
-$db = $database->getConnection();
+
+$conn = $database->getConnection();
 
 // Fetch the user's profile information from the database
 try {
@@ -27,7 +27,6 @@ try {
     
     // Fetch the user data
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
     // Check if the user data was found
     if (!$user) {
         echo "<p>User not found!</p>";
@@ -53,9 +52,8 @@ try {
     <h2><?php echo htmlspecialchars($user['name']); ?>'s Profile</h2>
     
     <div class="profile-details">
-        <p><strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?></p>
+        <p><strong>Username:</strong> <?php echo htmlspecialchars($user['name']); ?></p>
         <p><strong>Email:</strong> <?php echo htmlspecialchars($user['email']); ?></p>
-        <p><strong>Phone:</strong> <?php echo htmlspecialchars($user['phone']); ?></p>
         <p><strong>Joined Date:</strong> <?php echo date('F j, Y', strtotime($user['created_at'])); ?></p>
     </div>
 
