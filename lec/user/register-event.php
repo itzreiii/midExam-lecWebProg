@@ -58,11 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['event_id'])) {
 
 // Fetch available events
 $query = "SELECT e.*, 
-          (SELECT COUNT(*) FROM event_registrations r WHERE r.event_id = e.id) as registered_count
-          FROM events e 
+          (SELECT COUNT(*) FROM event_registrations r WHERE r.event_id = e.id) as registered_count,
+          (SELECT COUNT(*) FROM event_registrations r WHERE r.event_id = e.id AND r.user_id = :user_id) as is_registered
+          FROM events e
           WHERE e.date >= CURDATE() 
           ORDER BY e.date ASC";
-$events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+
+$stmt = $db->prepare($query);
+$stmt->execute([':user_id' => $_SESSION['user_id']]);
+$events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+// $query_untuk_button = "SELECT r.user_id FROM event_registrations r
+//                        ";
+// $button_status = $db->query($query_untuk_button)->fetch(PDO::FETCH_ASSOC);
 ?>
 
  
@@ -104,26 +113,29 @@ $events = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach ($events as $event): ?>
-                <tr>
-                    <td><?= htmlspecialchars($event['name']) ?></td>
-                    <td><?= htmlspecialchars($event['description']) ?></td>
-                    <td><?= $event['date'] ?></td>
-                    <td><?= $event['time'] ?></td>
-                    <td><?= htmlspecialchars($event['location']) ?></td>
-                    <td><?= $event['current_participants'] ?> / <?= $event['max_participants'] ?></td>
-                    <td>
-                        <?php if ($event['current_participants'] < $event['max_participants']): ?>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-event-id="<?= $event['id'] ?>">
-                                Register for Event
-                            </button>
-                        <?php else: ?>
-                            <button disabled>Full</button>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
+                    <?php foreach ($events as $event): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($event['name']) ?></td>
+                        <td><?= htmlspecialchars($event['description']) ?></td>
+                        <td><?= $event['date'] ?></td>
+                        <td><?= $event['time'] ?></td>
+                        <td><?= htmlspecialchars($event['location']) ?></td>
+                        <td><?= $event['registered_count'] ?> / <?= $event['max_participants'] ?></td>
+                        <td>
+                            <?php if ($event['is_registered'] > 0): ?>
+                                <button disabled>Registered</button>
+                            <?php elseif ($event['registered_count'] < $event['max_participants']): ?>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-event-id="<?= $event['id'] ?>">
+                                    Register for Event
+                                </button>
+                            <?php else: ?>
+                                <button disabled>Full</button>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
                 </tbody>
+
             </table>
         <?php endif; ?>
         

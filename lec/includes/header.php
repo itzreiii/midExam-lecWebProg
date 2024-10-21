@@ -21,7 +21,7 @@ include_once 'functions.php';
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="./register-event.php">Home</a>
+                        <a class="nav-link" href="./my-events.php">Home</a>
                     </li>
                     <?php if (is_logged_in()): ?>
                         <?php if (is_admin()): ?>
@@ -30,7 +30,7 @@ include_once 'functions.php';
                             </li>
                         <?php else: ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="./my-events.php">My Events</a>
+                                <a class="nav-link" href="./register-event.php">See Available Events</a>
                             </li>
                         <?php endif; ?>
                         <li class="nav-item">

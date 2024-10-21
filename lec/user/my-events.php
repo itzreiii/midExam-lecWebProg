@@ -29,22 +29,19 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
     <title>My Events</title>
-    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Perhatikan path yang benar -->
+    <link rel="stylesheet" href="../assets/css/style.css"> 
 </head>
 <body>
     <div class="container">
-        <h1>My Registered Events</h1>
+        <div class="grid">
+            <div><h1>My Registered Events</h1>
+                <?php if (empty($registered_events)): ?>
+                    <p>You haven't registered for any events yet.</p>
+            </div>
+                <?php else: ?>
+            
         
-        <!-- Navigation Menu -->
-        <nav>
-            <a href="my-events.php">Home</a> |
-            <a href="register-event.php">Register for Events</a> |
-            <a href="../logout.php">Logout</a>
-        </nav>
-        
-        <?php if (empty($registered_events)): ?>
-            <p>You haven't registered for any events yet.</p>
-        <?php else: ?>
+            <div>
             <table>
                 <tr>
                     <th>Event</th>
@@ -58,7 +55,7 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <tr>
                     <td><?= htmlspecialchars($event['name']) ?></td>
                     <td><?= $event['date'] ?></td>
-                    <td><?= $event['time'] ?></td>
+                    <td><?= $event['time'] ?></td>  
                     <td><?= htmlspecialchars($event['location']) ?></td>
                     <td><?= $event['status'] ?></td>
                     <td>
@@ -72,7 +69,10 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </tr>
                 <?php endforeach; ?>
             </table>
+            </div>
         <?php endif; ?>
+        </div>
+        
     </div>
     
     <script src="../assets/js/main.js"></script> <!-- Perhatikan path yang benar -->
