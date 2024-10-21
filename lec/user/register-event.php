@@ -165,6 +165,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     </div>
 
+    <!-- JS nya jgn diotak-otik kalo bisa ges :") -->
     <script>
         $(document).ready(function() {
             // Handle opening modal with the correct event information
