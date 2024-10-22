@@ -90,53 +90,41 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h1>Available Events</h1>
         
         <?php if (isset($message)): ?>
-            <div class="success"><?= $message ?></div>
+            <div class="alert alert-success"><?= $message ?></div>
         <?php endif; ?>
         
         <?php if (isset($error)): ?>
-            <div class="error"><?= $error ?></div>
+            <div class="alert alert-danger"><?= $error ?></div>
         <?php endif; ?>
 
         <?php if (empty($events)): ?>
             <p>No upcoming events available.</p>
         <?php else: ?>
-            <table border="1" class="table">
-                <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th>Location</th>
-                        <th>Available Spots</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($events as $event): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($event['name']) ?></td>
-                        <td><?= htmlspecialchars($event['description']) ?></td>
-                        <td><?= $event['date'] ?></td>
-                        <td><?= $event['time'] ?></td>
-                        <td><?= htmlspecialchars($event['location']) ?></td>
-                        <td><?= $event['registered_count'] ?> / <?= $event['max_participants'] ?></td>
-                        <td>
-                            <?php if ($event['is_registered'] > 0): ?>
-                                <button disabled>Registered</button>
-                            <?php elseif ($event['registered_count'] < $event['max_participants']): ?>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-event-id="<?= $event['id'] ?>">
-                                    Register for Event
-                                </button>
-                            <?php else: ?>
-                                <button disabled>Full</button>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-
-            </table>
+            <div class="row">
+                <?php foreach ($events as $event): ?>
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= htmlspecialchars($event['name']) ?></h5>
+                                <p class="card-text"><?= htmlspecialchars($event['description']) ?></p>
+                                <p class="card-text"><strong>Date:</strong> <?= $event['date'] ?></p>
+                                <p class="card-text"><strong>Time:</strong> <?= $event['time'] ?></p>
+                                <p class="card-text"><strong>Location:</strong> <?= htmlspecialchars($event['location']) ?></p>
+                                <p class="card-text"><strong>Spots:</strong> <?= $event['registered_count'] ?> / <?= $event['max_participants'] ?></p>
+                                <?php if ($event['is_registered'] > 0): ?>
+                                    <button class="btn btn-secondary" disabled>Registered</button>
+                                <?php elseif ($event['registered_count'] < $event['max_participants']): ?>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-event-id="<?= $event['id'] ?>">
+                                        Register for Event
+                                    </button>
+                                <?php else: ?>
+                                    <button class="btn btn-danger" disabled>Full</button>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         <?php endif; ?>
         
         <!-- Modal for registration -->
@@ -165,17 +153,16 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     </div>
 
-    <!-- JS nya jgn diotak-otik kalo bisa ges :") -->
     <script>
         $(document).ready(function() {
             // Handle opening modal with the correct event information
             $('#registerModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var eventId = button.data('event-id'); // Extract event ID from data-* attribute
-                var eventName = button.closest('tr').find('td:nth-child(1)').text(); // Get event name
-                var eventDescription = button.closest('tr').find('td:nth-child(2)').text(); // Get event description
-                var eventDate = button.closest('tr').find('td:nth-child(3)').text(); // Get event date
-                var eventLocation = button.closest('tr').find('td:nth-child(5)').text(); // Get event location
+                var eventName = button.closest('.card').find('.card-title').text(); // Get event name
+                var eventDescription = button.closest('.card').find('.card-text').eq(0).text(); // Get event description
+                var eventDate = button.closest('.card').find('.card-text').eq(1).text(); // Get event date
+                var eventLocation = button.closest('.card').find('.card-text').eq(3).text(); // Get event location
 
                 // Update the modal's content
                 $('#registerModal #event_id').val(eventId); // Set the event_id in the hidden input
@@ -211,7 +198,6 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 });
             });
         });
-
     </script>
 </body>
 </html>
