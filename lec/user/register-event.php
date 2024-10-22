@@ -107,10 +107,10 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <div class="card-body">
                                 <h5 class="card-title"><?= htmlspecialchars($event['name']) ?></h5>
                                 <p class="card-text"><?= htmlspecialchars($event['description']) ?></p>
-                                <p class="card-text"><strong>Date:</strong> <?= $event['date'] ?></p>
-                                <p class="card-text"><strong>Time:</strong> <?= $event['time'] ?></p>
-                                <p class="card-text"><strong>Location:</strong> <?= htmlspecialchars($event['location']) ?></p>
-                                <p class="card-text"><strong>Spots:</strong> <?= $event['registered_count'] ?> / <?= $event['max_participants'] ?></p>
+                                <p class="card-text"><?= $event['date'] ?></p>
+                                <p class="card-text"><?= $event['time'] ?></p>
+                                <p class="card-text"><?= htmlspecialchars($event['location']) ?></p>
+                                <p class="card-text"><?= $event['registered_count'] ?> / <?= $event['max_participants'] ?></p>
                                 <?php if ($event['is_registered'] > 0): ?>
                                     <button class="btn btn-secondary" disabled>Registered</button>
                                 <?php elseif ($event['registered_count'] < $event['max_participants']): ?>

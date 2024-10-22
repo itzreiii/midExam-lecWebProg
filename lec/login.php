@@ -12,26 +12,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $db = new Database();
     $conn = $db->getConnection();
 
-    $stmt = $conn->prepare("SELECT id, password, role, name FROM users WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, password, role, name, account_activation_hash FROM users WHERE email = ?");
     $stmt->execute([$email]);
     
     if ($stmt->rowCount() > 0) {
         $user = $stmt->fetch();
-         
-        if (password_verify($password, $user['password'])) {
-            session_start();
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['role'] = $user['role'];
-            $_SESSION['name'] = $user['name'];
-            
-            if ($user['role'] === 'admin') {
-                redirect('./admin/dashboard.php');
+
+        if ($user && $user['account_activation_hash'] === null) {
+
+            if (password_verify($password, $user['password'])) {
+                session_start();
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['role'] = $user['role'];
+                $_SESSION['name'] = $user['name'];
+                
+                if ($user['role'] === 'admin') {
+                    redirect('./admin/dashboard.php');
+                } else {
+                    redirect('./user/my-events.php');
+                }
             } else {
-                redirect('./user/my-events.php');
+                $error = "Invalid password!";
             }
+        } elseif ($user['account_activation_hash'] != null) {
+            $error = "Silahkan verifikasi akun terlebih dahulu.";
         } else {
-            $error = "Invalid password!";
+            $error = "Invalid Username or Password.";
         }
+
     } else {
         $error = "Email not found!";
     }

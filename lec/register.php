@@ -25,13 +25,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($stmt->rowCount() > 0) {
             $error = "Email already registered!";
         } else {
+            $activation_token = bin2hex(random_bytes(16));
+
+            $activation_token_hash = hash("sha256", $activation_token);       
             // Hash password and insert user
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO users (name, email, password, account_activation_hash) VALUES (?, ?, ?, ?)");
             
             try {
-                $stmt->execute([$name, $email, $hashed_password]);
-                $success = "Registration successful! Please login.";
+                // DIR AKAN DIGANTI KALO UDA DIHOSTING
+                $dir = "localhost/uts/webprog-lecture/lec/activate-account.php?token=$activation_token";
+                $stmt->execute([$name, $email, $hashed_password, $activation_token_hash]);
+                $success = "Registration successful! Please check your email to activate your account.";
+
+                // Muat mailer.php, dan pastikan $mail didefinisikan di sana
+                $mail = require __DIR__ . "/mailer.php";
+
+                $mail->setFrom("noreply@example.com");
+                $mail->addAddress($_POST['email']);
+                $mail->Subject = "Activate Account";
+
+                // Sisipkan variabel $dir dalam Body
+                $mail->Body = <<<END
+                Click <a href="$dir">here</a> 
+                to activate your account.
+                END;
+
+                try {
+
+                    $mail->send();
+
+                } catch (Exception $e) {
+
+                    echo "Message could not be sent. Mailer error: {$mail->ErrorInfo}";
+                    exit;
+
+                }
                 header("refresh:2;url=login.php");
             } catch(PDOException $e) {
                 $error = "Registration failed. Please try again.";
