@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     exit;
 
                 }
-                header("refresh:2;url=login.php");
             } catch(PDOException $e) {
                 $error = "Registration failed. Please try again.";
             } 
