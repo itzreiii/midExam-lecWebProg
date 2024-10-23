@@ -46,5 +46,5 @@ session_start();
                 <?php endif; ?>
             </ul>
         </div>
-    </div> <h2>Quick Links</h2>
+    </div>
 </nav>
