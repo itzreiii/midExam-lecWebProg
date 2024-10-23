@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             try {
                 // DIR AKAN DIGANTI KALO UDA DIHOSTING
-                $dir = "localhost/uts/webprog-lecture/lec/activate-account.php?token=$activation_token";
+                $dir = "localhost/webprog-lecture/lec/activate-account.php?token=$activation_token";
                 $stmt->execute([$name, $email, $hashed_password, $activation_token_hash]);
                 $success = "Registration successful! Please check your email to activate your account.";
 
