@@ -1,6 +1,6 @@
 <?php
 // includes/header.php
-include_once '../includes/functions.php';
+include_once 'functions.php';
 session_start();
 ?>
 <!DOCTYPE html>
@@ -16,7 +16,7 @@ session_start();
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand p-0" href="#">
-            <img src="/assets/images/ticket.png" alt="Logo" class="img-fluid" style="max-height: 40px;">
+            <img src="../assets/images/ticket.png" alt="Logo" class="img-fluid" style="max-height: 40px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
