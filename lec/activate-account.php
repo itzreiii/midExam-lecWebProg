@@ -46,7 +46,7 @@ $stmt->execute();
     <h1>Account Activated</h1>
 
     <p>Account activated successfully. You can now
-       <a href="login.php">log in</a>.</p>
+       <a href="auth/login.php">log in</a>.</p>
 
 </body>
 </html>
