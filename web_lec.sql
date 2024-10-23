@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2024 at 07:13 PM
+-- Generation Time: Oct 23, 2024 at 06:42 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -86,25 +86,27 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `role` enum('admin','user') DEFAULT 'user',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `account_activation_hash` varchar(64) DEFAULT NULL
+  `account_activation_hash` varchar(64) DEFAULT NULL,
+  `reset_token_hash` varchar(64) DEFAULT NULL,
+  `reset_token_expires_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `account_activation_hash`) VALUES
-(1, 'ray', 'ray@gmail.com', '$2y$10$vCFPPlVqSlPsbApH3J0n7eI4wEGJ9FteXl1RfcxrFeV16fCZCtEe.', 'admin', '2024-10-11 07:57:02', NULL),
-(2, 'rafpo', 'rafpo@a.com', '$2y$10$KdW/6vmWCgeW8ihM1.x/TO2134LyU4rA2P0dOTaRKzT/y.8BWt5m2', 'user', '2024-10-11 08:57:46', NULL),
-(3, 'rafpo2', 'rafpo2@rafpo2.com', '$2y$10$lpsRjLby4iX9iD3K9n9reO4OeDI2cyXYSkp2Y5G/KhVMyUpUiV1Tq', 'user', '2024-10-12 07:59:06', NULL),
-(4, 'asd', 'asd@asd', '$2y$10$7/VGuBMDl05/2UIQcr2AAutCal7Ko6GDI7m33PYEN6Xykm1Drhfju', 'user', '2024-10-20 05:35:58', NULL),
-(5, 'bry', 'bry@bry.com', '$2y$10$qGEz8suQxZAfXtPUwTZGFugCQSQwhH0Bb4u07YqzM4jK6pW/tF.rq', 'user', '2024-10-22 04:52:37', NULL),
-(6, 'ggg', 'ggg@ggg.com', '$2y$10$fIXtr8lNijYl3KhZ/0oUduIUdABTEehub//vDFaBRKXPABsYISc.e', 'user', '2024-10-22 16:10:08', '511aaa7e077e6a4ac89e1d2d54dadd1fcaa023e27d4f841f49b765abcf9a5360'),
-(7, '3123123', '32131@eafdsaf.com', '$2y$10$l5PvB391Kctj/Uion62bGeS4eTyvm7StpKEqTC71sJXf/ukFW1zOq', 'user', '2024-10-22 16:23:27', '9a23c6f07da825f198c2d4b39e3b5dd3c473c1f56e649e67401272d05f247ae9'),
-(8, '23123', 'fdsa@gsga.com', '$2y$10$QnnwdsAn9HyaEXkQCtEr.Ou4gopE4U.Z1PCJy1XvgFG3C2ADVR0OK', 'user', '2024-10-22 16:25:40', 'cc4aee57bb0dae71b3c73a3342d907c0aae519a82dfc6db738b51cff4789aeaf'),
-(9, '23123', 'ggggg@gagdsg.com', '$2y$10$8ivrxUbC9cONpvEUgMKZJuqGJuSeWe.hGUsZhLPDZhIh2HrSwRe32', 'user', '2024-10-22 16:26:46', '15a853cfd9cd844c744b4ab27fe24584eb301fd80a974aa09864180877d2b9ed'),
-(16, 'pooooooooooooooo', 'zoom.elraffs2@gmail.com', '$2y$10$X1CKQY8kOA.XG7JL1zurOOjnM9J.QNhMp4mCR9pFtEuJ0A7hzWtXO', 'user', '2024-10-22 17:08:08', NULL),
-(17, '32131', 'fdsafda@ggffffsa.com', '$2y$10$HZluF0OhbhdaGUYLWUc06Oa/DAG.flbHTMFVyXhQ1d6trDejwYxO2', 'user', '2024-10-22 17:09:43', 'd33f5769d3ff3a2751e5560248c1553e02d5eca8a87354fca09ab2a908097ac6');
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `account_activation_hash`, `reset_token_hash`, `reset_token_expires_at`) VALUES
+(1, 'ray', 'ray@gmail.com', '$2y$10$vCFPPlVqSlPsbApH3J0n7eI4wEGJ9FteXl1RfcxrFeV16fCZCtEe.', 'admin', '2024-10-11 07:57:02', NULL, NULL, NULL),
+(2, 'rafpo', 'rafpo@a.com', '$2y$10$KdW/6vmWCgeW8ihM1.x/TO2134LyU4rA2P0dOTaRKzT/y.8BWt5m2', 'user', '2024-10-11 08:57:46', NULL, NULL, NULL),
+(3, 'rafpo2', 'rafpo2@rafpo2.com', '$2y$10$lpsRjLby4iX9iD3K9n9reO4OeDI2cyXYSkp2Y5G/KhVMyUpUiV1Tq', 'user', '2024-10-12 07:59:06', NULL, NULL, NULL),
+(4, 'asd', 'asd@asd', '$2y$10$7/VGuBMDl05/2UIQcr2AAutCal7Ko6GDI7m33PYEN6Xykm1Drhfju', 'user', '2024-10-20 05:35:58', NULL, NULL, NULL),
+(5, 'bry', 'bry@bry.com', '$2y$10$qGEz8suQxZAfXtPUwTZGFugCQSQwhH0Bb4u07YqzM4jK6pW/tF.rq', 'user', '2024-10-22 04:52:37', NULL, NULL, NULL),
+(6, 'ggg', 'ggg@ggg.com', '$2y$10$fIXtr8lNijYl3KhZ/0oUduIUdABTEehub//vDFaBRKXPABsYISc.e', 'user', '2024-10-22 16:10:08', '511aaa7e077e6a4ac89e1d2d54dadd1fcaa023e27d4f841f49b765abcf9a5360', NULL, NULL),
+(7, '3123123', '32131@eafdsaf.com', '$2y$10$l5PvB391Kctj/Uion62bGeS4eTyvm7StpKEqTC71sJXf/ukFW1zOq', 'user', '2024-10-22 16:23:27', '9a23c6f07da825f198c2d4b39e3b5dd3c473c1f56e649e67401272d05f247ae9', NULL, NULL),
+(8, '23123', 'fdsa@gsga.com', '$2y$10$QnnwdsAn9HyaEXkQCtEr.Ou4gopE4U.Z1PCJy1XvgFG3C2ADVR0OK', 'user', '2024-10-22 16:25:40', 'cc4aee57bb0dae71b3c73a3342d907c0aae519a82dfc6db738b51cff4789aeaf', NULL, NULL),
+(9, '23123', 'ggggg@gagdsg.com', '$2y$10$8ivrxUbC9cONpvEUgMKZJuqGJuSeWe.hGUsZhLPDZhIh2HrSwRe32', 'user', '2024-10-22 16:26:46', '15a853cfd9cd844c744b4ab27fe24584eb301fd80a974aa09864180877d2b9ed', NULL, NULL),
+(16, 'pooooooooooooooo', 'zoom.elraffs2@gmail.com', '$2y$10$X1CKQY8kOA.XG7JL1zurOOjnM9J.QNhMp4mCR9pFtEuJ0A7hzWtXO', 'user', '2024-10-22 17:08:08', NULL, NULL, NULL),
+(17, '32131', 'fdsafda@ggffffsa.com', '$2y$10$HZluF0OhbhdaGUYLWUc06Oa/DAG.flbHTMFVyXhQ1d6trDejwYxO2', 'user', '2024-10-22 17:09:43', 'd33f5769d3ff3a2751e5560248c1553e02d5eca8a87354fca09ab2a908097ac6', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -152,7 +154,7 @@ ALTER TABLE `event_registrations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables
