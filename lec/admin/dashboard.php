@@ -25,66 +25,77 @@ $query = "SELECT r.*, e.name
           JOIN events e ON r.event_id = e.id 
           ORDER BY r.registration_date DESC 
           LIMIT 10;";
-
 $recent_registrations = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 
-
+include_once '../includes/adminheader.php';  // Include the header/navbar
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Dashboard</title>
-</head>
-<body>
+<div class="container mt-5 pt-5">
     <h1>Admin Dashboard</h1>
     
     <!-- Statistics -->
     <h2>Overview</h2>
-    <div class="stats">
-        <div>
-            <h3>Total Events</h3>
-            <p><?= $stats['total_events'] ?></p>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Events</h5>
+                    <p class="card-text"><?= $stats['total_events'] ?></p>
+                </div>
+            </div>
         </div>
-        <div>
-            <h3>Total Users</h3>
-            <p><?= $stats['total_users'] ?></p>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Users</h5>
+                    <p class="card-text"><?= $stats['total_users'] ?></p>
+                </div>
+            </div>
         </div>
-        <div>
-            <h3>Total Registrations</h3>
-            <p><?= $stats['total_registrations'] ?></p>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Registrations</h5>
+                    <p class="card-text"><?= $stats['total_registrations'] ?></p>
+                </div>
+            </div>
         </div>
-        <div>
-            <h3>Upcoming Events</h3>
-            <p><?= $stats['upcoming_events'] ?></p>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Upcoming Events</h5>
+                    <p class="card-text"><?= $stats['upcoming_events'] ?></p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Quick Links -->
-    <h2>Quick Links</h2>
-    <ul>
-        <li><a href="event-management.php">Manage Events</a></li>
-        <li><a href="user-management.php">Manage Users</a></li>
-        <li><a href="registrations.php">View All Registrations</a></li>
-    </ul>
-
     <!-- Recent Registrations -->
-    <h2>Recent Registrations</h2>
-    <table border="1">
-        <tr>
-            <th>User ID</th>
-            <th>Event</th>
-            <th>Registration Date</th>
-            <th>Status</th>
-        </tr>
-        <?php foreach ($recent_registrations as $reg): ?>
-        <tr>
-            <td><?= htmlspecialchars($reg['user_id']) ?></td>
-            <td><?= htmlspecialchars($reg['name']) ?></td>
-            <td><?= $reg['registration_date'] ?></td>
-            <td><?= $reg['status'] ?></td>
-        </tr>
-        <?php endforeach; ?>
+    <h2 class="mt-4">Recent Registrations</h2>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Event</th>
+                <th>Registration Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($recent_registrations as $reg): ?>
+            <tr>
+                <td><?= htmlspecialchars($reg['user_id']) ?></td>
+                <td><?= htmlspecialchars($reg['name']) ?></td>
+                <td><?= $reg['registration_date'] ?></td>
+                <td><?= $reg['status'] ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

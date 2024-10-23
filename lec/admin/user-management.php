@@ -8,6 +8,8 @@ $db = $database->getConnection();
 // Fetch all users
 $query = "SELECT id, name, email, role, created_at FROM users ORDER BY created_at ASC";
 $users = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+
+include_once '../includes/adminheader.php';  // Include the header/navbar
 ?>
 
 <!DOCTYPE html>

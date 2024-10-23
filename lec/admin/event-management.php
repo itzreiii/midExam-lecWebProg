@@ -81,6 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $query = "SELECT * FROM events ORDER BY date DESC";
 $stmt = $db->query($query);
 $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+include_once '../includes/adminheader.php';  // Include the header/navbar
 ?>
 
 <!DOCTYPE html>

@@ -14,6 +14,8 @@ $query = "SELECT r.id AS registration_id, r.registration_date, r.status,
           JOIN events e ON r.event_id = e.id
           ORDER BY r.registration_date DESC";
 $registrations = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+
+include_once '../includes/adminheader.php';  // Include the header/navbar
 ?>
 
 <!DOCTYPE html>
