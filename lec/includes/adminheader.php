@@ -37,11 +37,11 @@ session_start();
                         <a class="nav-link" href="registrations.php">View All Registrations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../logout.php">Logout</a>
+                        <a class="nav-link" href="../auth/logout.php">Logout</a>
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="../login.php">Login</a>
+                        <a class="nav-link" href="../auth/login.php">Login</a>
                     </li>
                 <?php endif; ?>
             </ul>
