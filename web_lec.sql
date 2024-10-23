@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2024 at 06:42 AM
+-- Generation Time: Oct 23, 2024 at 06:35 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,8 +48,8 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id`, `name`, `description`, `date`, `time`, `location`, `max_participants`, `current_participants`, `status`, `image_path`, `banner_path`, `created_at`, `updated_at`) VALUES
-(1, 'asdz', '123', '2030-12-12', '12:12:00', 'asd', 1, 1, 'closed', NULL, NULL, '2024-10-12 08:47:01', '2024-10-20 05:48:02'),
-(2, 'tes', 'testestesetes', '2024-10-26', '12:00:00', 'Mars', 50, 1, 'open', NULL, NULL, '2024-10-22 05:59:12', '2024-10-22 17:09:09');
+(1, 'asdz', '123', '2030-12-12', '12:12:00', 'asd', 1, 1, 'closed', NULL, NULL, '2024-10-12 08:47:01', '2024-10-23 16:23:46'),
+(2, 'tes', 'testestesetes', '2024-10-26', '12:00:00', 'Mars', 50, 3, 'open', NULL, NULL, '2024-10-22 05:59:12', '2024-10-23 16:28:45');
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,9 @@ CREATE TABLE `event_registrations` (
 
 INSERT INTO `event_registrations` (`id`, `event_id`, `user_id`, `registration_date`, `status`) VALUES
 (1, 1, 4, '2024-10-20 05:39:06', 'Accepted'),
-(4, 2, 2, '2024-10-22 15:57:05', 'confirmed');
+(4, 2, 2, '2024-10-22 15:57:05', 'confirmed'),
+(6, 2, 1, '2024-10-23 16:26:36', 'confirmed'),
+(7, 2, 20, '2024-10-23 16:28:45', 'confirmed');
 
 -- --------------------------------------------------------
 
@@ -106,7 +108,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `a
 (8, '23123', 'fdsa@gsga.com', '$2y$10$QnnwdsAn9HyaEXkQCtEr.Ou4gopE4U.Z1PCJy1XvgFG3C2ADVR0OK', 'user', '2024-10-22 16:25:40', 'cc4aee57bb0dae71b3c73a3342d907c0aae519a82dfc6db738b51cff4789aeaf', NULL, NULL),
 (9, '23123', 'ggggg@gagdsg.com', '$2y$10$8ivrxUbC9cONpvEUgMKZJuqGJuSeWe.hGUsZhLPDZhIh2HrSwRe32', 'user', '2024-10-22 16:26:46', '15a853cfd9cd844c744b4ab27fe24584eb301fd80a974aa09864180877d2b9ed', NULL, NULL),
 (16, 'pooooooooooooooo', 'zoom.elraffs2@gmail.com', '$2y$10$X1CKQY8kOA.XG7JL1zurOOjnM9J.QNhMp4mCR9pFtEuJ0A7hzWtXO', 'user', '2024-10-22 17:08:08', NULL, NULL, NULL),
-(17, '32131', 'fdsafda@ggffffsa.com', '$2y$10$HZluF0OhbhdaGUYLWUc06Oa/DAG.flbHTMFVyXhQ1d6trDejwYxO2', 'user', '2024-10-22 17:09:43', 'd33f5769d3ff3a2751e5560248c1553e02d5eca8a87354fca09ab2a908097ac6', NULL, NULL);
+(17, '32131', 'fdsafda@ggffffsa.com', '$2y$10$HZluF0OhbhdaGUYLWUc06Oa/DAG.flbHTMFVyXhQ1d6trDejwYxO2', 'user', '2024-10-22 17:09:43', 'd33f5769d3ff3a2751e5560248c1553e02d5eca8a87354fca09ab2a908097ac6', NULL, NULL),
+(20, 'Bryan', 'bbryanhp@gmail.com', '$2y$10$ObQLK0JNqzNW8tPKQyiq..lg4N3Gz9ySu2a0H88iVtZFSmaS8TkBi', 'user', '2024-10-23 13:54:22', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -148,13 +151,13 @@ ALTER TABLE `events`
 -- AUTO_INCREMENT for table `event_registrations`
 --
 ALTER TABLE `event_registrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
