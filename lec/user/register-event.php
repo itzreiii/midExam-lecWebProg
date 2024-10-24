@@ -67,14 +67,8 @@ $query = "SELECT e.*,
 $stmt = $db->prepare($query);
 $stmt->execute([':user_id' => $_SESSION['user_id']]);
 $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-// $query_untuk_button = "SELECT r.user_id FROM event_registrations r
-//                        ";
-// $button_status = $db->query($query_untuk_button)->fetch(PDO::FETCH_ASSOC);
 ?>
 
- 
 <!DOCTYPE html>
 <html>
 <head>
@@ -84,49 +78,112 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        /* Full-width carousel banner */
+        .carousel-inner img {
+            width: 100%; /* Make the image width 100% of the carousel */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .carousel-caption {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-color: black;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Available Events</h1>
-        
-        <?php if (isset($message)): ?>
-            <div class="alert alert-success"><?= $message ?></div>
-        <?php endif; ?>
-        
-        <?php if (isset($error)): ?>
-            <div class="alert alert-danger"><?= $error ?></div>
-        <?php endif; ?>
+    <!-- Header Include -->
+    <?php include '../includes/header.php'; ?>
 
+    <div class="container-fluid p-0">
+        <!-- Carousel as Website Banner -->
         <?php if (empty($events)): ?>
             <p>No upcoming events available.</p>
         <?php else: ?>
-            <div class="row">
-                <?php foreach ($events as $event): ?>
-                    <div class="col-md-4">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= htmlspecialchars($event['name']) ?></h5>
-                                <p class="card-text"><?= htmlspecialchars($event['description']) ?></p>
-                                <p class="card-text"><?= $event['date'] ?></p>
-                                <p class="card-text"><?= $event['time'] ?></p>
-                                <p class="card-text"><?= htmlspecialchars($event['location']) ?></p>
-                                <p class="card-text"><?= $event['registered_count'] ?> / <?= $event['max_participants'] ?></p>
-                                <?php if ($event['is_registered'] > 0): ?>
-                                    <button class="btn btn-secondary" disabled>Registered</button>
-                                <?php elseif ($event['registered_count'] < $event['max_participants']): ?>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-event-id="<?= $event['id'] ?>">
-                                        Register for Event
-                                    </button>
-                                <?php else: ?>
-                                    <button class="btn btn-danger" disabled>Full</button>
-                                <?php endif; ?>
-                            </div>
+            <div id="eventsCarousel" class="carousel slide" data-ride="carousel" data-interval="5000" data-pause="hover">
+                <div class="carousel-inner">
+                    <?php
+                    // Placeholder images
+                    $carouselImages = [
+                        '../assets/images/banner.png', // Image 1
+                        '../assets/images/ads.png', // Image 2
+                        '../assets/images/music.png', // Image 3
+                        '../assets/images/concert.jpg'  // Image 4
+                    ];
+                    $active_class = 'active';
+                    foreach ($carouselImages as $index => $image):
+                    ?>
+                        <div class="carousel-item <?= $active_class ?>">
+                            <img src="<?= htmlspecialchars($image) ?>" alt="Event Image <?= $index + 1 ?>">
                         </div>
-                    </div>
-                <?php endforeach; ?>
+                    <?php
+                    $active_class = ''; // Clear active class for the next slides
+                    endforeach;
+                    ?>
+                </div>
+
+                <!-- Carousel Controls -->
+                <a class="carousel-control-prev" href="#eventsCarousel" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#eventsCarousel" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
             </div>
         <?php endif; ?>
-        
+    </div>
+
+    <div class="container mt-5">
+    <h2>Available Events</h2>
+    <?php if (empty($events)): ?>
+        <p>No upcoming events available.</p>
+    <?php else: ?>
+        <div class="row">
+            <?php foreach ($events as $event): ?>
+                <div class="col-md-4">
+    <div class="card mb-4 shadow-lg" style="border-radius: 15px; background-color: #1a1a2e; color: #ffffff;">
+        <div class="card-body p-4">
+            <div class="d-flex align-items-center mb-3">
+                <div style="background-color: #ff2e63; color: white; font-size: 24px; font-weight: bold; padding: 10px 15px; border-radius: 10px;">
+                    <?= date('d', strtotime($event['date'])) ?>
+                    <br>
+                    <span style="font-size: 16px;"><?= date('M', strtotime($event['date'])) ?></span>
+                </div>
+                <div class="ml-3">
+                    <h5 class="card-title" style="font-size: 20px; font-weight: 700;"><?= htmlspecialchars($event['name']) ?></h5>
+                </div>
+            </div>
+            <p class="card-text" style="font-size: 14px;"><?= htmlspecialchars($event['description']) ?></p>
+            <?php if (!empty($event['image'])): ?>
+                <div style="height: 200px; background: url('<?= htmlspecialchars($event['image']) ?>') no-repeat center center; background-size: cover; border-radius: 10px;"></div>
+            <?php else: ?>
+                <div style="height: 200px; background-color: #e0e0e0; border-radius: 10px;">No Image Available</div>
+            <?php endif; ?>
+            <p class="mt-3"><?= $event['registered_count'] ?> / <?= $event['max_participants'] ?> Participants</p>
+            <?php if ($event['is_registered'] > 0): ?>
+                <button class="btn btn-secondary" disabled>Registered</button>
+            <?php elseif ($event['registered_count'] < $event['max_participants']): ?>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-event-id="<?= $event['id'] ?>">
+                    Register for Event
+                </button>
+            <?php else: ?>
+                <button class="btn btn-danger" disabled>Full</button>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+</div>
+
+
         <!-- Modal for registration -->
         <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -138,7 +195,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="registrationForm" action="register-event-proses.php" method="POST"> 
+                        <form id="registrationForm" action="register-event-proses.php" method="POST">
                             <input type="hidden" id="event_id" name="event_id" value="">
                             <p id="event_name"></p>
                             <p id="event_description"></p>

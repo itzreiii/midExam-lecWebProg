@@ -15,64 +15,94 @@ $db = $database->getConnection();
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['action'])) {
-        switch ($_POST['action']) {
-            case 'create':
-                $query = "INSERT INTO events (name, description, date, time, location, max_participants) 
-                         VALUES (:name, :description, :date, :time, :location, :max_participants)";
-                $stmt = $db->prepare($query);
-                $stmt->execute([
-                    ':name' => $_POST['name'] ?? '',
-                    ':description' => $_POST['description'] ?? '',
-                    ':date' => $_POST['date'] ?? '',
-                    ':time' => $_POST['time'] ?? '',
-                    ':location' => $_POST['location'] ?? '',
-                    ':max_participants' => $_POST['max_participants'] ?? 0
-                ]);
-                break;
+        $imagePath = null;
 
-            case 'update':
-                $query = "UPDATE events SET 
-                         name = :name, 
-                         description = :description,
-                         date = :date,
-                         time = :time,
-                         location = :location,
-                         max_participants = :max_participants 
-                         WHERE id = :id";
-                $stmt = $db->prepare($query);
-                $stmt->execute([
-                    ':id' => $_POST['event_id'] ?? 0,
-                    ':name' => $_POST['name'] ?? '',
-                    ':description' => $_POST['description'] ?? '',
-                    ':date' => $_POST['date'] ?? '',
-                    ':time' => $_POST['time'] ?? '',
-                    ':location' => $_POST['location'] ?? '',
-                    ':max_participants' => $_POST['max_participants'] ?? 0
-                ]);
-                break;
+        // Handle image upload
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+            $targetDir = "../uploads/";
+            $fileName = basename($_FILES['image']['name']);
+            $targetFilePath = $targetDir . $fileName;
+            $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
-            case 'delete':
-                $query = "DELETE FROM events WHERE id = :id";
-                $stmt = $db->prepare($query);
-                $stmt->execute([':id' => $_POST['event_id'] ?? 0]);
-                break;
+            // Allow only certain file formats
+            $allowedTypes = ['jpg', 'png', 'jpeg', 'gif'];
+            if (in_array($fileType, $allowedTypes)) {
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
+                    $imagePath = $targetFilePath; // Set image path for database insertion
+                } else {
+                    echo "Error uploading the file.";
+                }
+            } else {
+                echo "Invalid file type. Only JPG, PNG, JPEG, and GIF files are allowed.";
+            }
+        }
 
-            case 'change_status':
-                $new_status = $_POST['current_status'] === 'open' ? 'closed' : 'open';
-                $query = "UPDATE events SET status = :status WHERE id = :id";
-                $stmt = $db->prepare($query);
-                $stmt->execute([
-                    ':id' => $_POST['event_id'] ?? 0,
-                    ':status' => $new_status
-                ]);
-                break;
+        // Database operation with try-catch for error handling
+        try {
+            switch ($_POST['action']) {
+                case 'create':
+                    $query = "INSERT INTO events (name, description, date, time, location, max_participants, image) 
+                              VALUES (:name, :description, :date, :time, :location, :max_participants, :image)";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute([
+                        ':name' => $_POST['name'] ?? '',
+                        ':description' => $_POST['description'] ?? '',
+                        ':date' => $_POST['date'] ?? '',
+                        ':time' => $_POST['time'] ?? '',
+                        ':location' => $_POST['location'] ?? '',
+                        ':max_participants' => $_POST['max_participants'] ?? 0,
+                        ':image' => $imagePath
+                    ]);
+                    break;
 
-            case 'edit':
-                $query = "SELECT * FROM events WHERE id = :id";
-                $stmt = $db->prepare($query);
-                $stmt->execute([':id' => $_POST['event_id'] ?? 0]);
-                $event = $stmt->fetch(PDO::FETCH_ASSOC);
-                break;
+                case 'update':
+                    $query = "UPDATE events SET 
+                              name = :name, 
+                              description = :description,
+                              date = :date,
+                              time = :time,
+                              location = :location,
+                              max_participants = :max_participants,
+                              image = IFNULL(:image, image) 
+                              WHERE id = :id";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute([
+                        ':id' => $_POST['event_id'] ?? 0,
+                        ':name' => $_POST['name'] ?? '',
+                        ':description' => $_POST['description'] ?? '',
+                        ':date' => $_POST['date'] ?? '',
+                        ':time' => $_POST['time'] ?? '',
+                        ':location' => $_POST['location'] ?? '',
+                        ':max_participants' => $_POST['max_participants'] ?? 0,
+                        ':image' => $imagePath
+                    ]);
+                    break;
+
+                case 'delete':
+                    $query = "DELETE FROM events WHERE id = :id";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute([':id' => $_POST['event_id'] ?? 0]);
+                    break;
+
+                case 'change_status':
+                    $new_status = $_POST['current_status'] === 'open' ? 'closed' : 'open';
+                    $query = "UPDATE events SET status = :status WHERE id = :id";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute([
+                        ':id' => $_POST['event_id'] ?? 0,
+                        ':status' => $new_status
+                    ]);
+                    break;
+
+                case 'edit':
+                    $query = "SELECT * FROM events WHERE id = :id";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute([':id' => $_POST['event_id'] ?? 0]);
+                    $event = $stmt->fetch(PDO::FETCH_ASSOC);
+                    break;
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
         }
     }
 }
@@ -94,7 +124,7 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
             <h2><?= isset($event) ? 'Edit Event' : 'Create New Event' ?></h2>
         </div>
         <div class="card-body">
-            <form method="POST" id="eventForm">
+            <form method="POST" id="eventForm" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="<?= isset($event) ? 'update' : 'create' ?>">
                 <?php if (isset($event)): ?>
                     <input type="hidden" name="event_id" value="<?= htmlspecialchars($event['id']) ?>">
@@ -124,6 +154,10 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
                 <div class="mb-3">
                     <label for="max_participants" class="form-label">Max Participants:</label>
                     <input type="number" id="max_participants" name="max_participants" class="form-control" required value="<?= htmlspecialchars($event['max_participants'] ?? '') ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="image" class="form-label">Event Image:</label>
+                    <input type="file" id="image" name="image" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-primary"><?= isset($event) ? 'Update Event' : 'Create Event' ?></button>
             </form>
@@ -192,5 +226,4 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-
 </html>
