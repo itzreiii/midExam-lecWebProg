@@ -78,6 +78,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
     <style>
 /* Body background */
 body {
@@ -180,7 +181,7 @@ body {
                         '../assets/images/banner.png', // Image 1
                         '../assets/images/ads.png', // Image 2
                         '../assets/images/music.png', // Image 3
-                        '../assets/images/concert.jpg'  // Image 4
+                        '../assets/images/gambar4.jpg'  // Image 4
                     ];
                     $active_class = 'active';
                     foreach ($carouselImages as $index => $image):
@@ -341,7 +342,13 @@ body {
     });
 });
 
-
+Swal.fire({
+  position: "top-end",
+  icon: "success",
+  title: "Your work has been saved",
+  showConfirmButton: false,
+  timer: 1500
+});
 </script>
 
 </body>
