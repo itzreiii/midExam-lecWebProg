@@ -65,26 +65,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div class="profile-section">
-    <h2>Edit Profile</h2>
-    
-    <form action="edit-profile.php" method="POST">
-        <div class="form-group">
-            <label for="username" class="form-label">Username:</label>
-            <input type="text" id="username" class="form-control"name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
-        </div>
-        <div class="form-group pb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
-        </div>
-        <button type="submit" class="btn btn-primary w-10">Update Profile</button>
-    </form>
+<div class="container">
+    <div class="profile-section">
+        <h2>Edit Profile</h2>
+        
+        <form action="edit-profile.php" method="POST">
+            <div class="form-group">
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" id="username" class="form-control"name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+            </div>
+            <div class="form-group pb-3">
+                <label for="email" class="form-label">Email:</label>
+                <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-10">Update Profile</button>
+        </form>
+    </div>  
 </div>
-
 </body>
 </html>
 
