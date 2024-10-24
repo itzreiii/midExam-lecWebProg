@@ -199,8 +199,9 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <input type="hidden" id="event_id" name="event_id" value="">
                             <p id="event_name"></p>
                             <p id="event_description"></p>
-                            <p id="event_date"></p>
-                            <p id="event_location"></p>
+                            <p class="card-text event-date">Date: <?= htmlspecialchars($event['date']) ?></p>
+                            <p class="card-text event-location">Location: <?= htmlspecialchars($event['location']) ?></p>
+
                             <button type="submit" class="btn btn-primary">Confirm Registration</button>
                         </form>
                     </div>
@@ -218,10 +219,12 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 var eventId = button.data('event-id'); // Extract event ID from data-* attribute
                 var eventName = button.closest('.card').find('.card-title').text(); // Get event name
                 var eventDescription = button.closest('.card').find('.card-text').eq(0).text(); // Get event description
-                var eventDate = button.closest('.card').find('.card-text').eq(1).text(); // Get event date
-                var eventLocation = button.closest('.card').find('.card-text').eq(3).text(); // Get event location
+                var eventDate = button.closest('.card').find('.event-date').text(); // Get event date
+                var eventLocation = button.closest('.card').find('.event-location').text(); // Get event location
+
 
                 // Update the modal's content
+                console.log(eventId);
                 $('#registerModal #event_id').val(eventId); // Set the event_id in the hidden input
                 $('#registerModal #event_name').text('Name: ' + eventName);
                 $('#registerModal #event_description').text('Desc: ' + eventDescription);
