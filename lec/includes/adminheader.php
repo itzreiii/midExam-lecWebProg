@@ -10,14 +10,24 @@ include_once 'functions.php';
     <title>Admin Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        .navbar-nav .nav-link {
+            color: black;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#2828a7;">
     <div class="container">
         <a class="navbar-brand p-0" href="#">
             <img src="../assets/images/ticket.png" alt="Logo" class="img-fluid" style="max-height: 40px;">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -47,3 +57,9 @@ include_once 'functions.php';
         </div>
     </div>
 </nav>
+
+<div class="container mt-4"></div>
+<!-- Ensure Bootstrap JavaScript is included -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

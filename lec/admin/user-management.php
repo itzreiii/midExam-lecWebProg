@@ -13,7 +13,17 @@ $users = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 
 include_once '../includes/adminheader.php';  // Include the header/navbar
 ?>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
 <div class="container mt-5 pt-5">
     <h1 class="mb-4">User Management</h1>
 

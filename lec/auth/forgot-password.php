@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $mail->addAddress($email);
             $mail->Subject = "Password Reset";
             
-            $reset_link = "http://localhost/uts/webprog-lecture/lec/reset-password.php?token=" . $reset_token;            
+            $reset_link = "https://slategrey-lemur-191861.hostingersite.com/auth/reset-password.php?token=" . $reset_token;            
             $mail->Body = <<<END
             Click <a href="$reset_link">here</a> to reset your password.
             This link will expire in 1 hour.
