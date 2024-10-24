@@ -15,18 +15,18 @@ include_once 'functions.php';
     <style>
         .navbar-nav .nav-link {
             color: black; /* Mengatur warna teks menjadi hitam */
+            transition: color 0.3s, text-shadow 0.3s; /* Efek transisi untuk hover */
         }
         .navbar-nav .nav-link:hover {
-            color: white; /* Warna saat hover */
-            background-color: #4b1f7e; /* Background saat hover */
-            transition: background-color 0.3s, color 0.3s; /* Efek transisi */
+            color: #FFD700; /* Warna saat hover (kuning cerah) */
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.5); /* Efek bayangan saat hover */
         }
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#6028a7;">
     <div class="container">
-        <a class="navbar-brand p-0" href="#">
+        <a class="navbar-brand p-0" href="register-event.php">
             <img src="../assets/images/ticket.png" alt="Logo" class="img-fluid" style="max-height: 40px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
