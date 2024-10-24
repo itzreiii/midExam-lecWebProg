@@ -24,15 +24,16 @@ include_once 'functions.php';
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="./my-events.php">Home</a>
-                </li>
+                
                 <?php if (is_logged_in()): ?>
                     <?php if (is_admin()): ?>
                         <li class="nav-item">
                             <a class="nav-link" href="/admin/dashboard.php">Admin Dashboard</a>
                         </li>
                     <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../user/my-events.php">Home</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./register-event.php">See Available Events</a>
                         </li>
@@ -45,10 +46,10 @@ include_once 'functions.php';
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="./auth/login.php">Login</a>
+                        <a class="nav-link" href="../auth/login.php">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./auth/register.php">Register</a>
+                        <a class="nav-link" href="../auth/register.php">Register</a>
                     </li> 
                 <?php endif; ?>
             </ul>
