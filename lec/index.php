@@ -40,8 +40,8 @@
     <h1>Welcome to Event Registration</h1>
     <p>Register for the latest events or log in to manage your registrations!</p>
     
-    <a href="login.php" class="btn btn-primary btn-custom">Login</a>
-    <a href="register.php" class="btn btn-success btn-custom">Register</a>
+    <a href="auth/login.php" class="btn btn-primary btn-custom">Login</a>
+    <a href="auth/register.php" class="btn btn-success btn-custom">Register</a>
 </div>
 
 </body>
