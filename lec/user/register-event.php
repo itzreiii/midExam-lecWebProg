@@ -79,7 +79,63 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
+/* Floating effect and card styling */
+#registerModal .modal-content {
+    background-color: #1a1a2e; /* Dark background to match the overall theme */
+    color: #ffffff; /* White text */
+    border-radius: 15px; /* Rounded edges */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Deep shadow for floating effect */
+    border: none;
+    position: relative;
+}
+
+#registerModal .modal-header {
+    border-bottom: none; /* Remove border */
+    background-color: #ff2e63; /* Vibrant header background */
+    color: #fff; /* White text */
+    border-radius: 15px 15px 0 0; /* Rounded top edges */
+    padding: 20px;
+}
+
+#registerModal .modal-body {
+    padding: 30px;
+    
+}
+
+#registerModal .modal-footer {
+    border-top: none; /* Remove border */
+    background-color: transparent; /* Transparent background */
+}
+
+/* Button styles */
+#registerModal .btn-primary {
+    background-color: #ff2e63; /* Bright button color */
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#registerModal .btn-primary:hover {
+    background-color: #ff6f91; /* Slightly lighter shade on hover */
+}
+
+#registerModal .close {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+#registerModal .card-text {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+
+        
+
         /* Full-width carousel banner */
+        
         .carousel-inner img {
             width: 100%; /* Make the image width 100% of the carousel */
             height: auto; /* Maintain aspect ratio */
@@ -183,81 +239,97 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 </div>
 
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #1a1a2e; color: rgba(0, 0, 0, 0.72); border-radius: 15px; border: none;">
+            <div class="modal-header" style="background-color: #ff2e63; color: #fff; border-radius: 15px 15px 0 0;">
+                <h5 class="modal-title" id="registerModalLabel">Register for Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: black;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Display event image -->
+                <div id="event_image" style="height: 200px; background-size: cover; background-position: center center; border-radius: 10px; margin-bottom: 20px; background-color: #e0e0e0;"></div>
 
-        <!-- Modal for registration -->
-        <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="registerModalLabel">Register for Event</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="registrationForm" action="register-event-proses.php" method="POST">
-                            <input type="hidden" id="event_id" name="event_id" value="">
-                            <p id="event_name"></p>
-                            <p id="event_description"></p>
-                            <p class="card-text event-date">Date: <?= htmlspecialchars($event['date']) ?></p>
-                            <p class="card-text event-location">Location: <?= htmlspecialchars($event['location']) ?></p>
+                <form id="registrationForm" action="register-event-proses.php" method="POST">
+                    <input type="hidden" id="event_id" name="event_id" value="">
+                    
+                    <!-- Display event details -->
+                    <h5 id="event_name" style="margin: 0;"></h5>
+                    <p id="event_description"></p>
+                    <p class="card-text event-date">Date: <span id="event_date"></span></p>
+                    <p class="card-text event-location">Location: <span id="event_location"></span></p>
 
-                            <button type="submit" class="btn btn-primary">Confirm Registration</button>
-                        </form>
-                    </div>
-                </div>
+                    <button type="submit" class="btn btn-primary" style="background-color: #ff2e63; border: none;">Confirm Registration</button>
+                </form>
             </div>
         </div>
-
     </div>
-
-    <script>
-        $(document).ready(function() {
-            // Handle opening modal with the correct event information
-            $('#registerModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget); // Button that triggered the modal
-                var eventId = button.data('event-id'); // Extract event ID from data-* attribute
-                var eventName = button.closest('.card').find('.card-title').text(); // Get event name
-                var eventDescription = button.closest('.card').find('.card-text').eq(0).text(); // Get event description
-                var eventDate = button.closest('.card').find('.event-date').text(); // Get event date
-                var eventLocation = button.closest('.card').find('.event-location').text(); // Get event location
+</div>
 
 
-                // Update the modal's content
-                console.log(eventId);
-                $('#registerModal #event_id').val(eventId); // Set the event_id in the hidden input
-                $('#registerModal #event_name').text('Name: ' + eventName);
-                $('#registerModal #event_description').text('Desc: ' + eventDescription);
-                $('#registerModal #event_date').text('Date: ' + eventDate);
-                $('#registerModal #event_location').text('Location: ' + eventLocation);
-            });
 
-            // Handle form submission
-            $('#registrationForm').on('submit', function(e) {
-                e.preventDefault(); // Prevent the default form submission
-                var formData = $(this).serialize(); // Serialize the form data
 
-                // AJAX request to register the event
-                $.ajax({
-                    type: 'POST',
-                    url: 'register-event-proses.php',
-                    data: formData,
-                    dataType: 'json',
-                    success: function(response) {
-                        // Handle success or error response
-                        if (response.success) {
-                            alert(response.success);
-                            location.reload(); // Reload the page to see updated participants
-                        } else {
-                            alert(response.error);
-                        }
-                    },
-                    error: function() {
-                        alert('An error occurred. Please try again.');
-                    }
-                });
-            });
+<script>
+    $(document).ready(function() {
+    $('#registerModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var card = button.closest('.card'); // Find the closest card element
+
+        // Get event details from the card
+        var eventId = button.data('event-id'); // Get event ID
+        var eventName = card.find('.card-title').text(); // Get event name
+        var eventDescription = card.find('.card-text').eq(0).text(); // Get event description
+        var eventDate = card.find('.event-date').text(); // Get event date
+        var eventLocation = card.find('.event-location').text(); // Get event location
+        var eventImageDiv = card.find('div[style*="background"]'); // Get event image div
+        var eventImage = eventImageDiv.css('background-image'); // Get the actual background image CSS property
+
+        // Update the modal's content
+        $('#registerModal #event_id').val(eventId);
+        $('#registerModal #event_name').text('Name: ' + eventName);
+        $('#registerModal #event_description').text('Desc: ' + eventDescription);
+        $('#registerModal #event_date').text(eventDate);
+        $('#registerModal #event_location').text(eventLocation);
+
+        // Update modal's image with the same image as the card's background
+        if (eventImage && eventImage !== 'none') {
+            // Set the background image in the modal if available
+            $('#registerModal #event_image').css('background-image', eventImage);
+        } else {
+            // Set a default background if no image is available
+            $('#registerModal #event_image').css('background-image', 'url("../assets/images")');
+        }
+    });
+
+    $('#registrationForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
+        var formData = $(this).serialize(); // Serialize the form data
+
+        // AJAX request to register the event
+        $.ajax({
+            type: 'POST',
+            url: 'register-event-proses.php',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    alert(response.success);
+                    location.reload(); // Reload the page to see updated participants
+                } else {
+                    alert(response.error);
+                }
+            },
+            error: function() {
+                alert('An error occurred. Please try again.');
+            }
         });
-    </script>
+    });
+});
+
+
+</script>
+
 </body>
 </html>

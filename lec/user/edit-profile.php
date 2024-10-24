@@ -40,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_username = $_POST['name'];
     $new_email = $_POST['email'];
 
-    echo $new_username;
     // Update the user's profile information
     try {
         $update_sql = "UPDATE users SET name = :name, email = :email WHERE id = :id";
