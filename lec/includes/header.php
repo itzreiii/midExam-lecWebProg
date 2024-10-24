@@ -12,9 +12,19 @@ include_once 'functions.php';
     <title>Event Registration System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        .navbar-nav .nav-link {
+            color: black; /* Mengatur warna teks menjadi hitam */
+        }
+        .navbar-nav .nav-link:hover {
+            color: white; /* Warna saat hover */
+            background-color: #4b1f7e; /* Background saat hover */
+            transition: background-color 0.3s, color 0.3s; /* Efek transisi */
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#6028a7;">
     <div class="container">
         <a class="navbar-brand p-0" href="#">
             <img src="../assets/images/ticket.png" alt="Logo" class="img-fluid" style="max-height: 40px;">
@@ -23,8 +33,7 @@ include_once 'functions.php';
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                
+            <ul class="navbar-nav ms-auto"> <!-- Memindahkan nav links ke kanan -->
                 <?php if (is_logged_in()): ?>
                     <?php if (is_admin()): ?>
                         <li class="nav-item">
@@ -57,12 +66,9 @@ include_once 'functions.php';
     </div>
 </nav>
 
-
-
-
-    <div class="container mt-4"></div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div class="container mt-4"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
