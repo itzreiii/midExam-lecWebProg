@@ -30,7 +30,7 @@ $recent_registrations = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
 include_once '../includes/adminheader.php';  // Include the header/navbar
 ?>
 
-<div class="container mt-1 pt-5">
+<div class="container mt-5 pt-5">
     <h1>Admin Dashboard</h1>
     <br />
     <!-- Statistics -->
