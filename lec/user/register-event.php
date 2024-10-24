@@ -160,6 +160,12 @@ body {
     background-color: black;
 }
 
+#event_image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
     </style>
 </head>
 <body style="background-color: #0f0f1e;">
@@ -238,8 +244,18 @@ body {
             <?php if ($event['is_registered'] > 0): ?>
                 <button class="btn btn-secondary" disabled>Registered</button>
             <?php elseif ($event['registered_count'] < $event['max_participants']): ?>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#registerModal" data-event-id="<?= $event['id'] ?>">
-                    Register for Event
+                <button 
+                type="button" 
+                class="btn btn-primary open-modal-btn" 
+                data-event-id="<?= $event['id'] ?>" 
+                data-event-name="<?= htmlspecialchars($event['name']) ?>"
+                data-event-description="<?= htmlspecialchars($event['description']) ?>"
+                data-event-date="<?= date('d M Y', strtotime($event['date'])) ?>"
+                data-event-location="<?= htmlspecialchars($event['location']) ?>"
+                data-event-image="<?= htmlspecialchars($event['image']) ?>"
+                data-toggle="modal" 
+                data-target="#registerModal">
+                Register for Event
                 </button>
             <?php else: ?>
                 <button class="btn btn-danger" disabled>Full</button>
@@ -263,17 +279,17 @@ body {
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Display event image -->
-                <div id="event_image" style="height: 200px; background-size: cover; background-position: center center; border-radius: 10px; margin-bottom: 20px; background-color: #e0e0e0;"></div>
-
+                <!-- Gambar event -->
+                <img id="event_image" src="" alt="Event Image" style="width: 100%; height: auto; border-radius: 10px; margin-bottom: 20px;">
+                
                 <form id="registrationForm" action="register-event-proses.php" method="POST">
                     <input type="hidden" id="event_id" name="event_id" value="">
                     
-                    <!-- Display event details -->
                     <h5 id="event_name" style="margin: 0;"></h5>
+                    <br />
                     <p id="event_description"></p>
-                    <p class="card-text event-date">Date: <span id="event_date"></span></p>
-                    <p class="card-text event-location">Location: <span id="event_location"></span></p>
+                    <p class="card-text">Date: <span id="event_date"></span></p>
+                    <p class="card-text">Location: <span id="event_location"></span></p>
 
                     <button type="submit" class="btn btn-primary" style="background-color: #ff2e63; border: none;">Confirm Registration</button>
                 </form>
@@ -285,43 +301,39 @@ body {
 
 
 
+
 <script>
     $(document).ready(function() {
-    $('#registerModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var card = button.closest('.card'); // Find the closest card element
+    // Ketika tombol register diklik, modal akan dibuka dengan data yang sesuai
+    $('.open-modal-btn').on('click', function() {
+        var eventId = $(this).data('event-id');
+        var eventName = $(this).data('event-name');
+        var eventDescription = $(this).data('event-description');
+        var eventDate = $(this).data('event-date');
+        var eventLocation = $(this).data('event-location');
+        var eventImage = $(this).data('event-image');
 
-        // Get event details from the card
-        var eventId = button.data('event-id'); // Get event ID
-        var eventName = card.find('.card-title').text(); // Get event name
-        var eventDescription = card.find('.card-text').eq(0).text(); // Get event description
-        var eventDate = card.find('.event-date').text(); // Get event date
-        var eventLocation = card.find('.event-location').text(); // Get event location
-        var eventImageDiv = card.find('div[style*="background"]'); // Get event image div
-        var eventImage = eventImageDiv.css('background-image'); // Get the actual background image CSS property
-
-        // Update the modal's content
+        // Setel data event ke dalam modal
         $('#registerModal #event_id').val(eventId);
-        $('#registerModal #event_name').text('Name: ' + eventName);
-        $('#registerModal #event_description').text('Desc: ' + eventDescription);
+        $('#registerModal #event_name').text(eventName);
+        $('#registerModal #event_description').text(eventDescription);
         $('#registerModal #event_date').text(eventDate);
         $('#registerModal #event_location').text(eventLocation);
 
-        // Update modal's image with the same image as the card's background
-        if (eventImage && eventImage !== 'none') {
-            // Set the background image in the modal if available
-            $('#registerModal #event_image').css('background-image', eventImage);
+        // Setel gambar, jika tidak ada gambar maka tampilkan gambar default
+        if (eventImage && eventImage !== '') {
+            $('#registerModal #event_image').attr('src', eventImage);
         } else {
-            // Set a default background if no image is available
-            $('#registerModal #event_image').css('background-image', 'url("../assets/images")');
+            $('#registerModal #event_image').attr('src', '../assets/images/default-event.jpg');
         }
     });
 
+    // Penanganan form pendaftaran
     $('#registrationForm').on('submit', function(e) {
-        e.preventDefault(); // Prevent the default form submission
-        var formData = $(this).serialize(); // Serialize the form data
+        e.preventDefault(); // Mencegah pengiriman form secara default
+        var formData = $(this).serialize(); // Ambil data form
 
-        // AJAX request to register the event
+        // AJAX request untuk mendaftarkan event
         $.ajax({
             type: 'POST',
             url: 'register-event-proses.php',
@@ -330,17 +342,18 @@ body {
             success: function(response) {
                 if (response.success) {
                     alert(response.success);
-                    location.reload(); // Reload the page to see updated participants
+                    location.reload(); // Muat ulang halaman untuk memperbarui jumlah peserta
                 } else {
                     alert(response.error);
                 }
             },
             error: function() {
-                alert('An error occurred. Please try again.');
+                alert('Terjadi kesalahan. Silakan coba lagi.');
             }
         });
     });
 });
+
 
 Swal.fire({
   position: "top-end",
