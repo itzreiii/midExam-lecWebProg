@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($user['role'] === 'admin') {
                     redirect('../admin/dashboard.php');
                 } else {
-                    redirect('../user/my-events.php');
+                    redirect('../user/register-event.php');
                 }
             } else {
                 $error = "Invalid password!";

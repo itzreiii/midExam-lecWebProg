@@ -41,11 +41,11 @@ include_once 'functions.php';
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="../user/my-events.php">Home</a>
+                            <a class="nav-link" href="./register-event.php">Available Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./register-event.php">See Available Events</a>
-                        </li>
+                            <a class="nav-link" href="../user/my-events.php">My Events</a>
+                        </li>  
                     <?php endif; ?>
                     <li class="nav-item">
                         <a class="nav-link" href="./profile.php">Profile</a>
