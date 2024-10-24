@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2024 at 06:35 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Waktu pembuatan: 24 Okt 2024 pada 12.51
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- Struktur dari tabel `events`
 --
 
 CREATE TABLE `events` (
@@ -40,21 +40,22 @@ CREATE TABLE `events` (
   `image_path` varchar(255) DEFAULT NULL,
   `banner_path` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `events`
+-- Dumping data untuk tabel `events`
 --
 
-INSERT INTO `events` (`id`, `name`, `description`, `date`, `time`, `location`, `max_participants`, `current_participants`, `status`, `image_path`, `banner_path`, `created_at`, `updated_at`) VALUES
-(1, 'asdz', '123', '2030-12-12', '12:12:00', 'asd', 1, 1, 'closed', NULL, NULL, '2024-10-12 08:47:01', '2024-10-23 16:23:46'),
-(2, 'tes', 'testestesetes', '2024-10-26', '12:00:00', 'Mars', 50, 3, 'open', NULL, NULL, '2024-10-22 05:59:12', '2024-10-23 16:28:45');
+INSERT INTO `events` (`id`, `name`, `description`, `date`, `time`, `location`, `max_participants`, `current_participants`, `status`, `image_path`, `banner_path`, `created_at`, `updated_at`, `image`) VALUES
+(1, 'asdz', '123', '2030-12-12', '12:12:00', 'asd', 1, 1, 'closed', NULL, NULL, '2024-10-12 08:47:01', '2024-10-24 09:15:25', '../uploads/Music is the breath of my soul, bringing every moment in my life to life. (1).png'),
+(2, 'tes', 'testestesetes', '2024-10-26', '12:00:00', 'Mars', 50, 1, 'open', NULL, NULL, '2024-10-22 05:59:12', '2024-10-23 14:12:14', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event_registrations`
+-- Struktur dari tabel `event_registrations`
 --
 
 CREATE TABLE `event_registrations` (
@@ -66,19 +67,17 @@ CREATE TABLE `event_registrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `event_registrations`
+-- Dumping data untuk tabel `event_registrations`
 --
 
 INSERT INTO `event_registrations` (`id`, `event_id`, `user_id`, `registration_date`, `status`) VALUES
 (1, 1, 4, '2024-10-20 05:39:06', 'Accepted'),
-(4, 2, 2, '2024-10-22 15:57:05', 'confirmed'),
-(6, 2, 1, '2024-10-23 16:26:36', 'confirmed'),
-(7, 2, 20, '2024-10-23 16:28:45', 'confirmed');
+(4, 2, 2, '2024-10-22 15:57:05', 'confirmed');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -94,7 +93,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `account_activation_hash`, `reset_token_hash`, `reset_token_expires_at`) VALUES
@@ -109,20 +108,20 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`, `created_at`, `a
 (9, '23123', 'ggggg@gagdsg.com', '$2y$10$8ivrxUbC9cONpvEUgMKZJuqGJuSeWe.hGUsZhLPDZhIh2HrSwRe32', 'user', '2024-10-22 16:26:46', '15a853cfd9cd844c744b4ab27fe24584eb301fd80a974aa09864180877d2b9ed', NULL, NULL),
 (16, 'pooooooooooooooo', 'zoom.elraffs2@gmail.com', '$2y$10$X1CKQY8kOA.XG7JL1zurOOjnM9J.QNhMp4mCR9pFtEuJ0A7hzWtXO', 'user', '2024-10-22 17:08:08', NULL, NULL, NULL),
 (17, '32131', 'fdsafda@ggffffsa.com', '$2y$10$HZluF0OhbhdaGUYLWUc06Oa/DAG.flbHTMFVyXhQ1d6trDejwYxO2', 'user', '2024-10-22 17:09:43', 'd33f5769d3ff3a2751e5560248c1553e02d5eca8a87354fca09ab2a908097ac6', NULL, NULL),
-(20, 'Bryan', 'bbryanhp@gmail.com', '$2y$10$ObQLK0JNqzNW8tPKQyiq..lg4N3Gz9ySu2a0H88iVtZFSmaS8TkBi', 'user', '2024-10-23 13:54:22', NULL, NULL, NULL);
+(22, 'eka', 'ekandra2204@gmail.com', '$2y$10$XQ84uxC.tF4gdvGoi9m40eVnyHaF1bKDK7uujTQqCSkZOT.bfmEYy', 'user', '2024-10-23 14:10:04', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `events`
+-- Indeks untuk tabel `events`
 --
 ALTER TABLE `events`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `event_registrations`
+-- Indeks untuk tabel `event_registrations`
 --
 ALTER TABLE `event_registrations`
   ADD PRIMARY KEY (`id`),
@@ -130,7 +129,7 @@ ALTER TABLE `event_registrations`
   ADD KEY `user_id` (`user_id`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
@@ -138,33 +137,33 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `account_activation_hash` (`account_activation_hash`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `events`
+-- AUTO_INCREMENT untuk tabel `events`
 --
 ALTER TABLE `events`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `event_registrations`
+-- AUTO_INCREMENT untuk tabel `event_registrations`
 --
 ALTER TABLE `event_registrations`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `event_registrations`
+-- Ketidakleluasaan untuk tabel `event_registrations`
 --
 ALTER TABLE `event_registrations`
   ADD CONSTRAINT `event_registrations_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`id`) ON DELETE CASCADE,
