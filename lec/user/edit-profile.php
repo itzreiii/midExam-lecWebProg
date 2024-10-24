@@ -150,6 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         opacity: 1;
         box-shadow: 0 0 20px rgba(206, 21, 218, 0.7), 0 0 30px rgba(206, 21, 218, 0.6), 0 0 40px rgba(206, 21, 218, 0.5);
     }
+    
 
     @media only screen and (max-width: 768px) {
         .card-body p, .form-label {
@@ -172,11 +173,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="card-body">
             <form action="edit-profile.php" method="POST">
                 <div class="form-group">
-                    <label for="username" class="form-label">Username:</label>
+                    <label for="username" class="form-label"><p style="color: black;">Username:</p></label>
                     <input type="text" id="username" class="form-control" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
                 </div>
                 <div class="form-group pb-3">
-                    <label for="email" class="form-label">Email:</label>
+                    <label for="email" class="form-label"><p style="color: black;">Email:</p></label>
                     <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-10">Update Profile</button>

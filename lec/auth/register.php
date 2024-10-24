@@ -88,10 +88,8 @@ include '../includes/header.php';
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    display: flex;
     justify-content: center;
     align-items: center;
-    color: #ffffff;
 }
 
 .wrapper {
@@ -104,7 +102,7 @@ include '../includes/header.php';
 
 .main-container {
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.8); /* Ubah warna background menjadi lebih gelap */
+    background-color: rgba(0, 0, 0, 0.8); 
     padding: 50px;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
@@ -141,30 +139,27 @@ h2 {
 }
 
 .form-label {
-    color: #ffffff; /* Ubah warna label menjadi putih */
     font-size: 1.1rem;
     margin-bottom: 8px;
 }
 
-.form-control {
-    background-color: #333; /* Ubah warna background form menjadi lebih gelap */
-    border: 1px solid #555; /* Ubah border form menjadi lebih gelap */
-    color: #fff;
+/* .form-control {
+    background-color: #333; 
+    border: 1px solid #555; 
     padding: 12px 20px;
     border-radius: 50px;
     font-size: 1.1rem;
 }
 
 .form-control:focus {
-    background-color: #444; /* Ubah warna saat form di fokus */
+    background-color: #444; 
     border-color: #777;
-    color: #fff;
-    box-shadow: 0 0 0 0.2rem rgba(106, 13, 173, 0.25);
+    box-shadow: 0 0 0 0.2rem white;
 }
 
 .form-control::placeholder {
-    color: rgba(255, 255, 255, 0.6); /* Sesuaikan warna placeholder */
-}
+    color: rgba(255, 255, 255, 0.6); 
+} */
 
 .btn-custom {
     padding: 15px 30px;
@@ -283,7 +278,7 @@ h2 {
             </form>
 
             <div class="links-section">
-                <p>
+                <p style="color: white;">
                     Already have an account? <a href="login.php">Login here</a>
                 </p>
             </div>

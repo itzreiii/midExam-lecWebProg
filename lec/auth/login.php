@@ -57,15 +57,18 @@ include '../includes/header.php';
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
+        html, body {
+            height: 100%;
+        }
+
         body {
             background: linear-gradient(135deg, #7b2ff7, #f107a3);
             background-size: cover;
             background-position: center;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
+
+
             color: #ffffff;
-            display: flex;
+
             justify-content: center;
             align-items: center;
         }
@@ -116,8 +119,7 @@ include '../includes/header.php';
 
         .form-control {
             background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #fff;
+            border: 1px solid;
             padding: 12px 20px;
             border-radius: 50px;
             font-size: 1.1rem;
@@ -125,14 +127,9 @@ include '../includes/header.php';
 
         .form-control:focus {
             background-color: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
-            color: #fff;
             box-shadow: 0 0 0 0.2rem rgba(106, 13, 173, 0.25);
         }
 
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
 
         .btn-custom {
             padding: 15px 30px;
@@ -209,7 +206,7 @@ include '../includes/header.php';
 </head>
 
 <body>
-    <div class="wrapper">
+    <div class="container wrapper">
         <div class="main-container">
             <h2>Login to Ticketbox</h2>
 
