@@ -40,7 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $new_username = $_POST['name'];
     $new_email = $_POST['email'];
 
-    echo $new_username;
     // Update the user's profile information
     try {
         $update_sql = "UPDATE users SET name = :name, email = :email WHERE id = :id";
@@ -65,24 +64,124 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
-    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #1a1a2e;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 30px auto; /* Sesuaikan margin kiri-kanan agar di tengah */
+            color: #efefef;
+            font-size: 32px; /* Sesuaikan ukuran teks */
+            font-weight: 300; /* Menambah ketebalan */
+            padding-top: 50px; /* Tambah jarak di atas */
+        }
+
+        .card {
+            background-color: #16213e;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+            margin-bottom: 40px;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-body p, .form-label {
+            font-size: 18px;
+            color: #efefef;
+        }
+
+        .form-control {
+            background-color: #16213e;
+            border: 1px solid #efefef;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            background-color: #1a1a2e;
+            border-color: #6028a7;
+            box-shadow: 0 0 8px rgba(96, 40, 167, 0.7);
+        }
+
+        .btn-primary {
+            background-color: #6028a7;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(96, 40, 167, 0.7), 0 0 30px rgba(96, 40, 167, 0.5);
+        }
+
+        .btn-primary::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 300%;
+            height: 100%;
+            background-color: #6028a7;
+            transition: 0.5s;
+            opacity: 0.5;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: #6028a7;
+            color: white;
+            opacity: 1;
+            box-shadow: 0 0 20px rgba(206, 21, 218, 0.7), 0 0 30px rgba(206, 21, 218, 0.6), 0 0 40px rgba(206, 21, 218, 0.5);
+        }
+
+        @media only screen and (max-width: 768px) {
+            .card-body p, .form-label {
+                font-size: 16px;
+            }
+
+            .btn-primary {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<div class="profile-section">
+<div class="container">
     <h2>Edit Profile</h2>
-    
-    <form action="edit-profile.php" method="POST">
-        <div class="form-group">
-            <label for="username" class="form-label">Username:</label>
-            <input type="text" id="username" class="form-control"name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+    <div class="card">
+        <div class="card-body">
+            <form action="edit-profile.php" method="POST">
+                <div class="form-group">
+                    <label for="username" class="form-label">Username:</label>
+                    <input type="text" id="username" class="form-control" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
+                </div>
+                <div class="form-group pb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-10">Update Profile</button>
+            </form>
         </div>
-        <div class="form-group pb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
-        </div>
-        <button type="submit" class="btn btn-primary w-10">Update Profile</button>
-    </form>
+    </div>
 </div>
 
 </body>

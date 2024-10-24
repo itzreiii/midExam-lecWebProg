@@ -44,14 +44,96 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Link to your CSS file -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Link to custom CSS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <style>
+        body {
+            background-color: #1a1a2e;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+
+        h2 {
+            text-align: center;
+            margin: 40px;
+            color:#efefef;
+        }
+
+        .card {
+            background-color: #16213e;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-body p {
+            font-size: 18px;
+            color: #efefef;
+        }
+
+        .btn-primary {
+    background-color: #6028a7;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(96, 40, 167, 0.7), 0 0 30px rgba(96, 40, 167, 0.5);
+}
+
+.btn-primary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    background-color: #6028a7;
+    transition: 0.5s;
+    opacity: 0.5;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
+}
+
+.btn-primary:hover {
+    background-color: #6028a7; /* Same base color */
+    color: white;
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(206, 21, 218, 0.7), 0 0 30px rgba(206, 21, 218, 0.6), 0 0 40px rgba(206, 21, 218, 0.5);
+}
+
+
+        @media only screen and (max-width: 768px) {
+            
+
+            .card-body p {
+                font-size: 16px;
+            }
+
+            .btn-primary {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <div class="container">
-<h2><?php echo htmlspecialchars($user['name']); ?>'s Profile</h2>   
+    <h2><?php echo htmlspecialchars($user['name']); ?>'s Profile</h2>   
     <div class="card">
         <div class="card-body">
             <p><strong>Username:</strong> <?php echo htmlspecialchars($user['name']); ?></p>
@@ -64,7 +146,3 @@ try {
 
 </body>
 </html>
-
-<?php
-include_once '../includes/footer.php';  // Include the footer
-?>

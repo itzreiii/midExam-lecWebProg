@@ -14,12 +14,12 @@ include_once 'functions.php';
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
         .navbar-nav .nav-link {
-            color: black; /* Mengatur warna teks menjadi hitam */
+            color: rgba(0, 0, 0, 1); /* Mengatur warna teks menjadi hitam */
             transition: color 0.3s, text-shadow 0.3s; /* Efek transisi untuk hover */
         }
         .navbar-nav .nav-link:hover {
-            color: #FFD700; /* Warna saat hover (kuning cerah) */
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.5); /* Efek bayangan saat hover */
+            color: rgba(206, 21, 218, 0.8); /* Warna saat hover (kuning cerah) */
+            text-shadow: 0 0 10px rgba(206, 21, 218, 0.8), 0 0 20px rgba(206, 21, 218, 0.5); /* Efek bayangan saat hover */
         }
     </style>
 </head>
