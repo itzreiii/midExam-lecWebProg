@@ -104,7 +104,10 @@ include '../includes/header.php';
             margin-bottom: 20px;
         }
 
-       
+       form {
+        box-shadow: none;
+        background-color: rgba(0, 0, 0, 0.0);
+       }
 
         .form-group {
             text-align: left;
@@ -112,7 +115,7 @@ include '../includes/header.php';
         }
 
         .form-label {
-            color: #1a1a2e;
+            color: white;
             font-size: 1.1rem;
             margin-bottom: 8px;
         }

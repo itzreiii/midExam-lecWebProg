@@ -91,10 +91,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         margin-bottom: 40px;
     }
 
-
     .card-body p, .form-label {
         font-size: 18px;
         color: #efefef;
+    }
+    
+    .card-body {
+        background-color: #16213e;
+    }
+
+    form {
+        background-color: #16213e;
     }
 
     .form-control {
@@ -110,6 +117,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         background-color: #1a1a2e;
         border-color: #6028a7;
         box-shadow: 0 0 8px rgba(96, 40, 167, 0.7);
+    }
+
+    .form-group {
+        background-color: #16213e;
     }
 
     .btn-primary {
@@ -173,11 +184,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="card-body">
             <form action="edit-profile.php" method="POST">
                 <div class="form-group">
-                    <label for="username" class="form-label"><p style="color: black;">Username:</p></label>
+                    <label for="username" class="form-label">Username:</label>
                     <input type="text" id="username" class="form-control" name="name" value="<?php echo htmlspecialchars($user['name']); ?>" required>
                 </div>
                 <div class="form-group pb-3">
-                    <label for="email" class="form-label"><p style="color: black;">Email:</p></label>
+                    <label for="email" class="form-label">Email:</label>
                     <input type="email" id="email" class="form-control" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
                 </div>
                 <button type="submit" class="btn btn-primary w-10">Update Profile</button>

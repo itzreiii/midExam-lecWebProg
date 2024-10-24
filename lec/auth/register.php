@@ -133,12 +133,17 @@ h2 {
     color: #fff;
 }
 
+form {
+    background-color: rgba(0, 0, 0, 0.0); 
+}
+
 .form-group {
     text-align: left;
     margin-bottom: 20px;
 }
 
 .form-label {
+    color: white;
     font-size: 1.1rem;
     margin-bottom: 8px;
 }

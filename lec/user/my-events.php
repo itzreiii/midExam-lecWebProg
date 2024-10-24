@@ -32,6 +32,7 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Registered Events</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -198,7 +199,7 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </style>
 </head>
 <body>
-
+<br />
 <div class="container">
     <div class="page-header">
         <h1>My Registered Events</h1>
