@@ -79,37 +79,53 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-/* Floating effect and card styling */
+/* Body background */
+body {
+    background-color: #0f0f1e; /* Lebih gelap dari #1a1a2e */
+    color: #ffffff; /* Putih untuk teks */
+    font-family: 'Arial', sans-serif; /* Gunakan font yang sederhana dan mudah dibaca */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Pastikan body mengisi seluruh tinggi layar */
+}
+
+/* Styling untuk kartu */
+.card {
+    background-color: #1a1a2e; /* Warna latar belakang kartu yang gelap */
+    color: #ffffff; /* Teks berwarna putih di dalam kartu */
+    border-radius: 15px; /* Membuat sudut kartu menjadi melengkung */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Memberikan efek bayangan pada kartu */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animasi halus ketika hover */
+}
+
+.card:hover {
+    transform: translateY(-10px); /* Mengangkat kartu saat hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Efek bayangan yang lebih kuat saat hover */
+}
+
+/* Styling untuk modal */
 #registerModal .modal-content {
-    background-color: #1a1a2e; /* Dark background to match the overall theme */
-    color: #ffffff; /* White text */
-    border-radius: 15px; /* Rounded edges */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Deep shadow for floating effect */
+    background-color: #1a1a2e; /* Warna latar belakang modal gelap */
+    color: #ffffff; /* Teks putih */
+    border-radius: 15px; /* Membuat sudut modal melengkung */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7); /* Efek bayangan untuk modal */
     border: none;
-    position: relative;
 }
 
 #registerModal .modal-header {
-    border-bottom: none; /* Remove border */
-    background-color: #ff2e63; /* Vibrant header background */
-    color: #fff; /* White text */
-    border-radius: 15px 15px 0 0; /* Rounded top edges */
+    background-color: #ff2e63; /* Warna latar belakang merah cerah */
+    color: #fff; /* Teks berwarna putih */
+    border-radius: 15px 15px 0 0; /* Sudut atas yang melengkung */
     padding: 20px;
 }
 
-#registerModal .modal-body {
-    padding: 30px;
-    
-}
-
 #registerModal .modal-footer {
-    border-top: none; /* Remove border */
-    background-color: transparent; /* Transparent background */
+    border-top: none; /* Hilangkan border pada bagian footer modal */
 }
 
-/* Button styles */
+/* Efek hover pada tombol di dalam modal */
 #registerModal .btn-primary {
-    background-color: #ff2e63; /* Bright button color */
+    background-color: #ff2e63; /* Warna tombol utama */
     border: none;
     border-radius: 10px;
     padding: 10px 20px;
@@ -118,42 +134,39 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 #registerModal .btn-primary:hover {
-    background-color: #ff6f91; /* Slightly lighter shade on hover */
+    background-color: #ff6f91; /* Warna yang lebih terang saat hover */
 }
 
-#registerModal .close {
-    color: #fff;
-    font-size: 1.5rem;
-}
-
+/* Teks lain di dalam modal */
 #registerModal .card-text {
     font-size: 16px;
     line-height: 1.5;
 }
 
+/* Styling untuk carousel */
+.carousel-inner img {
+    width: 100%; /* Mengatur lebar gambar menjadi 100% */
+    height: auto; /* Mempertahankan rasio aspek */
+}
 
-        
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.6); /* Latar belakang transparan hitam */
+    padding: 10px;
+    border-radius: 5px;
+}
 
-        /* Full-width carousel banner */
-        
-        .carousel-inner img {
-            width: 100%; /* Make the image width 100% of the carousel */
-            height: auto; /* Maintain aspect ratio */
-        }
-        .carousel-caption {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 10px;
-            border-radius: 5px;
-        }
-        .carousel-control-prev-icon, .carousel-control-next-icon {
-            background-color: black;
-        }
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: black;
+}
+
     </style>
 </head>
-<body>
+<body style="background-color: #0f0f1e;">
     <!-- Header Include -->
     <?php include '../includes/header.php'; ?>
 
+
+    
     <div class="container-fluid p-0">
         <!-- Carousel as Website Banner -->
         <?php if (empty($events)): ?>
@@ -194,8 +207,8 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
     </div>
 
-    <div class="container mt-5">
-    <h2>Available Events</h2>
+    <div class="container mt-5"> 
+    <h2 style="color: #ffffff;">Available Events</h2>
     <?php if (empty($events)): ?>
         <p>No upcoming events available.</p>
     <?php else: ?>
