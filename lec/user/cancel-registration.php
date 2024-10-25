@@ -77,8 +77,7 @@ try {
 
     // Display the alert and redirect using JavaScript
     echo "<script>
-        alert('Data berhasil dihapus.');
-        window.location.href = 'register-event.php'; 
+        window.location.href = 'my-events.php'; 
     </script>";
 
     exit();

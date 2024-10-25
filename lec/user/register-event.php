@@ -2,7 +2,7 @@
 session_start();
 require_once '../config/database.php';
 require_once '../includes/functions.php';
-include '../includes/header.php';
+
 
 // Check if user is logged in
 if (!is_logged_In()) {

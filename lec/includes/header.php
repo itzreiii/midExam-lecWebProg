@@ -2,7 +2,7 @@
 // includes/header.php
 include_once 'functions.php';
 
-// $logo_url = __DIR__ . '../assets/images/ticket.png';
+// $logo_url = __DIR__ . '../assets/images/logo.png';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +27,7 @@ include_once 'functions.php';
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#6028a7;">
     <div class="container">
         <a class="navbar-brand p-0" href="register-event.php">
-            <img src="../assets/images/ticket.png" alt="Logo" class="img-fluid" style="max-height: 40px;">
+            <img src="../assets/images/logo.png" alt="Logo" class="img-fluid" style="max-height: 40px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
