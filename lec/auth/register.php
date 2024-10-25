@@ -102,13 +102,14 @@ include '../includes/header.php';
 
 .main-container {
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.8); 
+    background-color: rgba(0, 0, 0, 0.6);
     padding: 50px;
     border-radius: 20px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
     width: 100%;
     max-width: 400px;
     margin: auto;
+    padding-bottom: 50px;
 }
 
 h2 {

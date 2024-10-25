@@ -120,7 +120,7 @@ include '../includes/header.php';
             margin-bottom: 8px;
         }
 
-        .form-control {
+        /* .form-control {
             background-color: rgba(255, 255, 255, 0.1);
             border: 1px solid;
             padding: 12px 20px;
@@ -131,7 +131,7 @@ include '../includes/header.php';
         .form-control:focus {
             background-color: rgba(255, 255, 255, 0.2);
             box-shadow: 0 0 0 0.2rem rgba(106, 13, 173, 0.25);
-        }
+        } */
 
 
         .btn-custom {

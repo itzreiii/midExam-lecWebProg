@@ -26,7 +26,7 @@ include_once 'functions.php';
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:#6028a7;">
     <div class="container">
-        <a class="navbar-brand p-0" href="register-event.php">
+        <a class="navbar-brand p-0">
             <img src="../assets/images/logo.png" alt="Logo" class="img-fluid" style="max-height: 40px;">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
