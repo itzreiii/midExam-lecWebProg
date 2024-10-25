@@ -28,29 +28,21 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-         :root {
+        :root {
             --primary-color: #4361ee;
             --secondary-color: #3f37c9;
-            --accent-color: #4895ef;
-            --light-bg: #f8f9fa;
         }
         
         body {
             background-color: #f5f7fa;
-        }
-        
-        .page-header {
-            background: linear-gradient(135deg, var(--primary-color), #357abd);
-            color: white;
-            padding: 2rem 0;
-            margin-bottom: 2rem;
-            border-radius: 0 0 1rem 1rem;
+            padding-top: 2rem;
         }
         
         .stats-card {
             border: none;
             border-radius: 1rem;
             transition: transform 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
         .stats-card:hover {
@@ -65,6 +57,7 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
         
         .table th {
             background-color: var(--secondary-color);
+            color: white;
             border: none;
         }
         
@@ -72,12 +65,6 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
             padding: 0.5em 1em;
             border-radius: 2em;
             font-weight: 500;
-        }
-        
-        .search-box {
-            border-radius: 2rem;
-            padding: 0.75rem 1.5rem;
-            border: 2px solid #eee;
         }
         
         .back-btn {
@@ -90,78 +77,21 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
             .table-responsive {
                 font-size: 0.9rem;
             }
-            
-            .stats-card {
-                margin-bottom: 1rem;
-            }
         }
     </style>
 </head>
 <body>
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <h1 class="mb-2">
-                        <i class="fas fa-clipboard-list me-2"></i>
-                        Event Registrations
-                    </h1>
-                    <p class="mb-0">Manage and track all event registrations</p>
-                </div>
-                <div class="col-md-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control search-box" placeholder="Search registrations...">
-                        <button class="btn btn-light rounded-pill ms-2">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="container">
-        <!-- Stats Cards -->
-        <div class="row mb-4">
+        <!-- Single Stats Card for Total Participants -->
+        <div class="row justify-content-center mb-4 pt-5 mt-3">
             <div class="col-md-4">
                 <div class="card stats-card">
                     <div class="card-body text-center">
-                        <i class="fas fa-users fa-2x text-primary mb-2"></i>
-                        <h3 class="card-title">
+                        <i class="fas fa-users fa-3x text-primary mb-3"></i>
+                        <h2 class="card-title mb-2">
                             <?php echo count($registrations); ?>
-                        </h3>
-                        <p class="card-text text-muted">Total Registrations</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card stats-card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
-                        <h3 class="card-title">
-                            <?php 
-                            echo count(array_filter($registrations, function($r) {
-                                return $r['status'] === 'Confirmed';
-                            }));
-                            ?>
-                        </h3>
-                        <p class="card-text text-muted">Confirmed</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card stats-card">
-                    <div class="card-body text-center">
-                        <i class="fas fa-clock fa-2x text-warning mb-2"></i>
-                        <h3 class="card-title">
-                            <?php 
-                            echo count(array_filter($registrations, function($r) {
-                                return $r['status'] === 'Pending';
-                            }));
-                            ?>
-                        </h3>
-                        <p class="card-text text-muted">Pending</p>
+                        </h2>
+                        <p class="card-text text-muted h5">Total Participants</p>
                     </div>
                 </div>
             </div>
@@ -226,6 +156,5 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-</script>
 </body>
 </html>
