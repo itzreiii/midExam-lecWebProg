@@ -26,223 +26,210 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = "Email already registered!";
         } else {
             $activation_token = bin2hex(random_bytes(16));
-
-            $activation_token_hash = hash("sha256", $activation_token);       
+            $activation_token_hash = hash("sha256", $activation_token);
+            
             // Hash password and insert user
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             $stmt = $conn->prepare("INSERT INTO users (name, email, password, account_activation_hash) VALUES (?, ?, ?, ?)");
             
             try {
-                // DIR AKAN DIGANTI KALO UDA DIHOSTING
-                // $dir = "https://slategrey-lemur-191861.hostingersite.com/activate-account.php?token=$activation_token";
-                $dir = "localhost/webprog-lecture/lec/activate-account.php?token=$activation_token";
+                $dir = "localhost/your-path/activate-account.php?token=" . $activation_token;
                 $stmt->execute([$name, $email, $hashed_password, $activation_token_hash]);
                 $success = "Registration successful! Please check your email to activate your account.";
 
-                // Muat mailer.php, dan pastikan $mail didefinisikan di sana
+                // Load mailer configuration
                 $mail = require __DIR__ . "/mailer.php";
-
+                
                 $mail->setFrom("noreply@example.com");
-                $mail->addAddress($_POST['email']);
+                $mail->addAddress($email);
                 $mail->Subject = "Activate Account";
-
-                // Sisipkan variabel $dir dalam Body
                 $mail->Body = <<<END
                 Click <a href="$dir">here</a> 
                 to activate your account.
                 END;
 
                 try {
-
                     $mail->send();
-
                 } catch (Exception $e) {
-
-                    echo "Message could not be sent. Mailer error: {$mail->ErrorInfo}";
-                    exit;
-
+                    $error = "Could not send verification email. Please try again.";
                 }
             } catch(PDOException $e) {
                 $error = "Registration failed. Please try again.";
-            } 
+            }
         }
     }
 }
-
-include '../includes/header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - Ticketbox</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-       body {
-    background: linear-gradient(135deg, #7b2ff7, #f107a3);
-    background-size: cover;
-    background-position: center;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    justify-content: center;
-    align-items: center;
-}
+        html, body {
+            height: 100%;
+        }
 
-.wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
+        body {
+            background: linear-gradient(135deg, #7b2ff7, #f107a3);
+            background-size: cover;
+            background-position: center;
+            color: #ffffff;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-.main-container {
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 50px;
-    border-radius: 20px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    width: 100%;
-    max-width: 400px;
-    margin: auto;
-    padding-bottom: 50px;
-}
+        .wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+        }
 
-h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #fff;
-}
+        .main-container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
 
-.alert {
-    border: none;
-    margin-bottom: 20px;
-    border-radius: 10px;
-}
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
 
-.alert-danger {
-    background-color: rgba(255, 0, 0, 0.3);
-    color: #fff;
-}
+        .alert-danger {
+            background-color: rgba(255, 0, 0, 0.3);
+            border: none;
+            color: #fff;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
 
-.alert-success {
-    background-color: rgba(40, 167, 69, 0.3);
-    color: #fff;
-}
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.3);
+            border: none;
+            color: #fff;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
 
-form {
-    background-color: rgba(0, 0, 0, 0.0); 
-}
+        form {
+            background-color: transparent;
+            box-shadow: none;
+        }
 
-.form-group {
-    text-align: left;
-    margin-bottom: 20px;
-}
+        .form-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
 
-.form-label {
-    color: white;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-}
+        .form-label {
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
 
-/* .form-control {
-    background-color: #333; 
-    border: 1px solid #555; 
-    padding: 12px 20px;
-    border-radius: 50px;
-    font-size: 1.1rem;
-}
+        .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            color: white;
+        }
 
-.form-control:focus {
-    background-color: #444; 
-    border-color: #777;
-    box-shadow: 0 0 0 0.2rem white;
-}
+        .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 0.2rem rgba(106, 13, 173, 0.25);
+            color: white;
+        }
 
-.form-control::placeholder {
-    color: rgba(255, 255, 255, 0.6); 
-} */
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
 
-.btn-custom {
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    margin: 10px 0;
-    border-radius: 50px;
-    width: 100%;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
+        .btn-custom {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            margin: 10px 0;
+            border-radius: 50px;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
 
-.btn-primary {
-    background-color: #6a0dad;
-    border: none;
-}
+        .btn-primary {
+            background-color: #6a0dad;
+            border: none;
+        }
 
-.btn-primary:hover {
-    background-color: #5d008f;
-    transform: scale(1.05);
-}
+        .btn-primary:hover {
+            background-color: #5d008f;
+            transform: scale(1.05);
+        }
 
-.links-section {
-    margin-top: 20px;
-    font-size: 1.1rem;
-}
+        .links-section {
+            margin-top: 20px;
+            font-size: 1.1rem;
+        }
 
-.links-section a {
-    color: #f107a3;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
+        .links-section a {
+            color: #f107a3;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-.links-section a:hover {
-    color: #d30690;
-}
+        .links-section a:hover {
+            color: #d30690;
+        }
 
-@media (max-width: 768px) {
-    body {
-        padding: 15px;
-    }
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 30px;
+            }
 
-    .main-container {
-        padding: 30px;
-    }
+            h2 {
+                font-size: 2rem;
+            }
 
-    h2 {
-        font-size: 2rem;
-    }
+            .form-control, .btn-custom {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
 
-    .form-control, .btn-custom {
-        font-size: 1rem;
-        padding: 10px 20px;
-    }
-}
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 20px;
+            }
 
-@media (max-width: 480px) {
-    .main-container {
-        padding: 20px;
-    }
+            h2 {
+                font-size: 1.8rem;
+            }
 
-    h2 {
-        font-size: 1.8rem;
-    }
+            .form-control, .btn-custom {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
 
-    .form-control, .btn-custom {
-        font-size: 0.9rem;
-        padding: 10px 15px;
-    }
-
-    .links-section {
-        font-size: 0.9rem;
-    }
-}
-
+            .links-section {
+                font-size: 0.9rem;
+            }
+        }
     </style>
 </head>
-
 <body>
     <div class="wrapper">
         <div class="main-container">
@@ -292,5 +279,4 @@ form {
         </div>
     </div>
 </body>
-
 </html>

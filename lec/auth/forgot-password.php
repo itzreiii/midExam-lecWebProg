@@ -3,6 +3,7 @@
 require_once '../config/database.php';
 require_once '../includes/functions.php';
 
+
 $error = '';
 $success = '';
 
@@ -59,8 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $success = "If that email exists in our system, you will receive a password reset link.";
     }
 }
-
-include '../includes/header.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,13 +74,16 @@ include '../includes/header.php';
     <style>
         html, body {
             height: 100%;
+            margin: 0;
+            padding: 0;
         }
 
         body {
             background: linear-gradient(135deg, #7b2ff7, #f107a3);
-            background-size: cover;
-            background-position: center;
+            background-attachment: fixed;
             color: #ffffff;
+            min-height: 100vh;
+            display: flex;
             justify-content: center;
             align-items: center;
         }
