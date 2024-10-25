@@ -23,70 +23,20 @@ include_once 'functions.php';
 
         .navbar {
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
         }
 
         .navbar-brand img {
             max-height: 40px;
-            transition: transform 0.3s ease;
         }
 
         .navbar-nav .nav-link {
-            position: relative;
             color: var(--text-color) !important;
             padding: 0.5rem 1rem;
             margin: 0 0.2rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .navbar-nav .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background-color: #FFD700;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
-
-        .navbar-nav .nav-link:hover::after {
-            width: 80%;
         }
 
         .navbar-nav .nav-link:hover {
             color: #FFD700 !important;
-        }
-
-        .navbar-toggler {
-            border: none;
-            padding: 0.5rem;
-            cursor: pointer;
-        }
-
-        .navbar-toggler:focus {
-            box-shadow: none;
-            outline: none;
-        }
-
-        .navbar-toggler-icon {
-            width: 24px;
-            height: 24px;
-            transition: transform 0.3s ease;
-        }
-
-        /* Animation for hamburger icon */
-        .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
-            transform: rotate(90deg);
         }
 
         /* User profile button */
@@ -98,12 +48,17 @@ include_once 'functions.php';
             padding: 0.5rem 1rem;
             border-radius: 50px;
             background-color: var(--hover-color);
-            transition: all 0.3s ease;
         }
 
-        .user-profile:hover {
-            background-color: var(--primary-color);
-            transform: translateY(-2px);
+        /* Navbar collapse animation */
+        .navbar-collapse {
+            transition: height 0.35s ease;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .navbar-collapse.show {
+            height: auto;
         }
 
         /* Responsive adjustments */
@@ -111,27 +66,6 @@ include_once 'functions.php';
             .navbar-collapse {
                 background-color: var(--primary-color);
                 padding: 1rem;
-                border-radius: 0 0 10px 10px;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                z-index: 1000;
-                transition: transform 0.3s ease-in-out;
-            }
-
-            .navbar-collapse.collapsing {
-                height: auto;
-                transition: all 0.3s ease;
-                overflow: hidden;
-            }
-
-            .navbar-collapse.show {
-                display: block;
-            }
-
-            .navbar-nav {
-                padding: 1rem 0;
             }
 
             .user-profile {
@@ -139,18 +73,15 @@ include_once 'functions.php';
                 justify-content: center;
             }
 
-            .navbar-nav .nav-link::after {
-                display: none;
-            }
-
             .navbar-nav .nav-link {
-                padding: 0.7rem 1rem;
-                border-radius: 5px;
                 text-align: center;
             }
+        }
 
-            .navbar-nav .nav-link:hover {
-                background-color: var(--hover-color);
+        @media (min-width: 992px) {
+            .navbar-collapse {
+                height: auto !important;
+                overflow: visible;
             }
         }
     </style>
@@ -162,11 +93,13 @@ include_once 'functions.php';
                 <img src="../assets/images/logo.png" alt="Logo" class="img-fluid">
             </a>
             
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- Tombol hamburger -->
+            <button class="navbar-toggler" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
             
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Navbar yang bisa di-collapse -->
+            <div class="navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="dashboard.php">
@@ -201,38 +134,58 @@ include_once 'functions.php';
         </div>
     </nav>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript for toggle -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Get the navbar toggler and collapse element
-            const navbarToggler = document.querySelector('.navbar-toggler');
+            const toggler = document.querySelector('.navbar-toggler');
             const navbarCollapse = document.querySelector('.navbar-collapse');
+            let isOpen = false;
 
-            // Add click event listener to the toggler
-            navbarToggler.addEventListener('click', function() {
-                // Toggle the collapsed state
-                const isExpanded = this.getAttribute('aria-expanded') === 'true';
-                this.setAttribute('aria-expanded', !isExpanded);
-            });
-
-            // Close menu when clicking outside
-            document.addEventListener('click', function(event) {
-                const isClickInside = navbarToggler.contains(event.target) || navbarCollapse.contains(event.target);
-                
-                if (!isClickInside && navbarCollapse.classList.contains('show')) {
-                    navbarToggler.click();
+            // Function to set navbar height
+            function setNavbarHeight() {
+                if (window.innerWidth < 992) { // Only for mobile view
+                    if (isOpen) {
+                        const height = navbarCollapse.scrollHeight;
+                        navbarCollapse.style.height = height + 'px';
+                    } else {
+                        navbarCollapse.style.height = '0px';
+                    }
+                } else {
+                    navbarCollapse.style.height = 'auto';
                 }
+            }
+
+            // Toggle navbar
+            toggler.addEventListener('click', function() {
+                isOpen = !isOpen;
+                if (isOpen) {
+                    navbarCollapse.classList.add('show');
+                } else {
+                    navbarCollapse.classList.remove('show');
+                }
+                setNavbarHeight();
             });
 
-            // Close menu when clicking on a nav link
-            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            // Close navbar when clicking a link
+            const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (navbarCollapse.classList.contains('show')) {
-                        navbarToggler.click();
+                link.addEventListener('click', () => {
+                    if (window.innerWidth < 992 && isOpen) {
+                        isOpen = false;
+                        navbarCollapse.classList.remove('show');
+                        setNavbarHeight();
                     }
                 });
             });
+
+            // Handle window resize
+            window.addEventListener('resize', setNavbarHeight);
+
+            // Initial setup
+            setNavbarHeight();
         });
     </script>
 </body>
