@@ -14,12 +14,12 @@ include_once 'functions.php';
     <link rel="stylesheet" href="/assets/css/style.css">
     <style>
         .navbar-nav .nav-link {
-            color: rgba(0, 0, 0, 1); /* Mengatur warna teks menjadi hitam */
-            transition: color 0.3s, text-shadow 0.3s; /* Efek transisi untuk hover */
+            color: rgba(0, 0, 0, 1); /* Set text color to black */
+            transition: color 0.3s, text-shadow 0.3s; /* Hover transition effect */
         }
         .navbar-nav .nav-link:hover {
-            color: rgba(206, 21, 218, 0.8); /* Warna saat hover (kuning cerah) */
-            text-shadow: 0 0 10px rgba(206, 21, 218, 0.8), 0 0 20px rgba(206, 21, 218, 0.5); /* Efek bayangan saat hover */
+            color: rgba(206, 21, 218, 0.8); /* Hover color */
+            text-shadow: 0 0 10px rgba(206, 21, 218, 0.8), 0 0 20px rgba(206, 21, 218, 0.5); /* Shadow effect */
         }
     </style>
 </head>
@@ -29,11 +29,11 @@ include_once 'functions.php';
         <a class="navbar-brand p-0" href="register-event.php">
             <img src="../assets/images/ticket.png" alt="Logo" class="img-fluid" style="max-height: 40px;">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto"> <!-- Memindahkan nav links ke kanan -->
+            <ul class="navbar-nav ms-auto">
                 <?php if (is_logged_in()): ?>
                     <?php if (is_admin()): ?>
                         <li class="nav-item">
@@ -66,9 +66,7 @@ include_once 'functions.php';
     </div>
 </nav>
 
-<div class="container mt-4"></div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<div class="container mt-5 pt-4"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

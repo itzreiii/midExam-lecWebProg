@@ -34,6 +34,9 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <title>My Registered Events</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
@@ -225,11 +228,12 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     
                     <?php if ($event['status'] != 'cancelled'): ?>
-                        <form method="POST" action="cancel-registration.php">
+                        <button type="button" class="btn-cancel" onclick="confirmCancellation(<?= $event['id'] ?>)">
+                            <i class="fas fa-times-circle"></i> Cancel Registration
+                        </button>
+                        
+                        <form id="cancel-form-<?= $event['id'] ?>" method="POST" action="cancel-registration.php" style="display: none;">
                             <input type="hidden" name="event_id" value="<?= $event['id'] ?>">
-                            <button type="submit" class="btn-cancel">
-                                <i class="fas fa-times-circle"></i> Cancel Registration
-                            </button>
                         </form>
                     <?php endif; ?>
                 </div>
@@ -237,6 +241,26 @@ $registered_events = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     <?php endif; ?>
 </div>
+
+<script>
+// Fungsi untuk konfirmasi pembatalan menggunakan SweetAlert2
+function confirmCancellation(eventId) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, cancel it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Jika user konfirmasi, kirim form
+            document.getElementById('cancel-form-' + eventId).submit();
+        }
+    })
+}
+</script>
 
 <script src="../assets/js/main.js"></script>
 </body>

@@ -78,7 +78,7 @@ $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
 /* Body background */
 body {
@@ -184,9 +184,9 @@ body {
                     <?php
                     // Placeholder images
                     $carouselImages = [
-                        '../assets/images/banner.png', // Image 1
+                        '../assets/images/welcome.png', // Image 1
                         '../assets/images/ads.png', // Image 2
-                        '../assets/images/music.png', // Image 3
+                        '../assets/images/quotes.png', // Image 3
                         '../assets/images/gambar4.jpg'  // Image 4
                     ];
                     $active_class = 'active';
@@ -244,19 +244,21 @@ body {
             <?php if ($event['is_registered'] > 0): ?>
                 <button class="btn btn-secondary" disabled>Registered</button>
             <?php elseif ($event['registered_count'] < $event['max_participants']): ?>
-                <button 
-                type="button" 
-                class="btn btn-primary open-modal-btn" 
-                data-event-id="<?= $event['id'] ?>" 
-                data-event-name="<?= htmlspecialchars($event['name']) ?>"
-                data-event-description="<?= htmlspecialchars($event['description']) ?>"
-                data-event-date="<?= date('d M Y', strtotime($event['date'])) ?>"
-                data-event-location="<?= htmlspecialchars($event['location']) ?>"
-                data-event-image="<?= htmlspecialchars($event['image']) ?>"
-                data-toggle="modal" 
-                data-target="#registerModal">
-                Register for Event
-                </button>
+               <button 
+    type="button" 
+    class="btn open-modal-btn" 
+    style="background-color: #28a745; color: white;"  
+    data-event-id="<?= $event['id'] ?>" 
+    data-event-name="<?= htmlspecialchars($event['name']) ?>"
+    data-event-description="<?= htmlspecialchars($event['description']) ?>"
+    data-event-date="<?= date('d M Y', strtotime($event['date'])) ?>"
+    data-event-location="<?= htmlspecialchars($event['location']) ?>"
+    data-event-image="<?= htmlspecialchars($event['image']) ?>"
+    data-toggle="modal" 
+    data-target="#registerModal">
+    Register for Event
+</button>
+
             <?php else: ?>
                 <button class="btn btn-danger" disabled>Full</button>
             <?php endif; ?>
@@ -330,38 +332,52 @@ body {
 
     // Penanganan form pendaftaran
     $('#registrationForm').on('submit', function(e) {
-        e.preventDefault(); // Mencegah pengiriman form secara default
-        var formData = $(this).serialize(); // Ambil data form
+    e.preventDefault(); // Mencegah pengiriman form secara default
+    var formData = $(this).serialize(); // Ambil data form
 
-        // AJAX request untuk mendaftarkan event
-        $.ajax({
-            type: 'POST',
-            url: 'register-event-proses.php',
-            data: formData,
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    alert(response.success);
-                    location.reload(); // Muat ulang halaman untuk memperbarui jumlah peserta
-                } else {
-                    alert(response.error);
-                }
-            },
-            error: function() {
-                alert('Terjadi kesalahan. Silakan coba lagi.');
+    // AJAX request untuk mendaftarkan event
+    $.ajax({
+        type: 'POST',
+        url: 'register-event-proses.php',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Registered!',
+                    text: 'You have successfully registered for the event.',
+                    showConfirmButton: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload(); // Muat ulang halaman untuk memperbarui jumlah peserta
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.error,
+                    showConfirmButton: true
+                });
             }
-        });
+        },
+        error: function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong. Please try again later.',
+                showConfirmButton: true
+            });
+        }
     });
 });
+ });
+   
 
 
-Swal.fire({
-  position: "top-end",
-  icon: "success",
-  title: "Your work has been saved",
-  showConfirmButton: false,
-  timer: 1500
-});
+
+
 </script>
 
 </body>
