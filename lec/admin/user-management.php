@@ -21,6 +21,7 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
     <title>Manage Users</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         :root {
             --primary-color: #4361ee;
@@ -164,6 +165,7 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
                             <th>Email</th>
                             <th>Role</th>
                             <th>Joined Date</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -204,6 +206,12 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
                                     <?= date('M d, Y', strtotime($user['created_at'])) ?>
                                 </div>
                             </td>
+                            <td>
+                                <!-- Delete user -->
+                                 <a href="delete_user.php?id=<?= $user['id']?>" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                 </a>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -214,5 +222,18 @@ include_once '../includes/adminheader.php';  // Include the header/navbar
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    
+    <script>
+        // Menampilkan SweetAlert jika ada status sukses
+        <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
+            Swal.fire({
+                title: 'Sukses!',
+                text: 'User berhasil dihapus.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        <?php endif; ?>
+    </script>
 </body>
 </html>
