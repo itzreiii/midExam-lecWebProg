@@ -222,48 +222,49 @@ body {
         <div class="row">
             <?php foreach ($events as $event): ?>
                 <div class="col-md-4">
-    <div class="card mb-4 shadow-lg" style="border-radius: 15px; background-color: #1a1a2e; color: #ffffff;">
-        <div class="card-body p-4">
-            <div class="d-flex align-items-center mb-3">
-                <div style="background-color: #ff2e63; color: white; font-size: 24px; font-weight: bold; padding: 10px 15px; border-radius: 10px;">
-                    <?= date('d', strtotime($event['date'])) ?>
-                    <br>
-                    <span style="font-size: 16px;"><?= date('M', strtotime($event['date'])) ?></span>
-                </div>
-                <div class="ml-3">
-                    <h5 class="card-title" style="font-size: 20px; font-weight: 700;"><?= htmlspecialchars($event['name']) ?></h5>
-                </div>
+                <div class="card mb-4 shadow-lg" style="border-radius: 15px; background-color: #1a1a2e; color: #ffffff;">
+    <div class="card-body p-4">
+        <div class="d-flex align-items-center mb-3">
+            <div style="background-color: <?= strtotime($event['date']) < time() ? '#6c757d' : '#ff2e63' ?>; color: white; font-size: 24px; font-weight: bold; padding: 10px 15px; border-radius: 10px;">
+                <?= date('d', strtotime($event['date'])) ?>
+                <br>
+                <span style="font-size: 16px;"><?= date('M', strtotime($event['date'])) ?></span>
             </div>
-            <p class="card-text" style="font-size: 14px;"><?= htmlspecialchars($event['description']) ?></p>
-            <?php if (!empty($event['image'])): ?>
-                <div style="height: 200px; background: url('<?= htmlspecialchars($event['image']) ?>') no-repeat center center; background-size: cover; border-radius: 10px;"></div>
-            <?php else: ?>
-                <div style="height: 200px; background-color: #e0e0e0; border-radius: 10px;">No Image Available</div>
-            <?php endif; ?>
-            <p class="mt-3"><?= $event['registered_count'] ?> / <?= $event['max_participants'] ?> Participants</p>
-            <?php if ($event['is_registered'] > 0): ?>
-                <button class="btn btn-secondary" disabled>Registered</button>
-            <?php elseif ($event['registered_count'] < $event['max_participants']): ?>
-               <button 
-    type="button" 
-    class="btn open-modal-btn" 
-    style="background-color: #28a745; color: white;"  
-    data-event-id="<?= $event['id'] ?>" 
-    data-event-name="<?= htmlspecialchars($event['name']) ?>"
-    data-event-description="<?= htmlspecialchars($event['description']) ?>"
-    data-event-date="<?= date('d M Y', strtotime($event['date'])) ?>"
-    data-event-location="<?= htmlspecialchars($event['location']) ?>"
-    data-event-image="<?= htmlspecialchars($event['image']) ?>"
-    data-toggle="modal" 
-    data-target="#registerModal">
-    Register for Event
-</button>
-
-            <?php else: ?>
-                <button class="btn btn-danger" disabled>Full</button>
-            <?php endif; ?>
+            <div class="ml-3">
+                <h5 class="card-title" style="font-size: 20px; font-weight: 700;"><?= htmlspecialchars($event['name']) ?></h5>
+            </div>
         </div>
+        <p class="card-text" style="font-size: 14px;"><?= htmlspecialchars($event['description']) ?></p>
+        <?php if (!empty($event['image'])): ?>
+            <div style="height: 200px; background: url('<?= htmlspecialchars($event['image']) ?>') no-repeat center center; background-size: cover; border-radius: 10px;"></div>
+        <?php else: ?>
+            <div style="height: 200px; background-color: #e0e0e0; border-radius: 10px;">No Image Available</div>
+        <?php endif; ?>
+        <p class="mt-3"><?= $event['registered_count'] ?> / <?= $event['max_participants'] ?> Participants</p>
+        <?php if (strtotime($event['date']) < time()): ?>
+            <button class="btn btn-secondary" disabled>Closed</button>
+        <?php elseif ($event['is_registered'] > 0): ?>
+            <button class="btn btn-secondary" disabled>Registered</button>
+        <?php elseif ($event['registered_count'] < $event['max_participants']): ?>
+            <button 
+                type="button"
+                class="btn open-modal-btn"
+                style="background-color: #28a745; color: white;"
+                data-event-id="<?= $event['id'] ?>"
+                data-event-name="<?= htmlspecialchars($event['name']) ?>"
+                data-event-description="<?= htmlspecialchars($event['description']) ?>"
+                data-event-date="<?= date('d M Y', strtotime($event['date'])) ?>"
+                data-event-location="<?= htmlspecialchars($event['location']) ?>"
+                data-event-image="<?= htmlspecialchars($event['image']) ?>"
+                data-toggle="modal"
+                data-target="#registerModal">
+                Register for Event
+            </button>
+        <?php else: ?>
+            <button class="btn btn-danger" disabled>Full</button>
+        <?php endif; ?>
     </div>
+</div>
 </div>
 
             <?php endforeach; ?>
