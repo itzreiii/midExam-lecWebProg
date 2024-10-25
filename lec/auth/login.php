@@ -57,7 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-        html, body {
+        html,
+        body {
             height: 100%;
         }
 
@@ -104,10 +105,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 20px;
         }
 
-       form {
-        box-shadow: none;
-        background-color: rgba(0, 0, 0, 0.0);
-       }
+        form {
+            box-shadow: none;
+            background-color: rgba(0, 0, 0, 0.0);
+        }
 
         .form-group {
             text-align: left;
@@ -120,18 +121,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             margin-bottom: 8px;
         }
 
-        /* .form-control {
+        .form-control {
             background-color: rgba(255, 255, 255, 0.1);
-            border: 1px solid;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 12px 20px;
             border-radius: 50px;
             font-size: 1.1rem;
+            color: white;
         }
 
         .form-control:focus {
             background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
             box-shadow: 0 0 0 0.2rem rgba(106, 13, 173, 0.25);
-        } */
+            color: white;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
 
 
         .btn-custom {
@@ -181,7 +189,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 font-size: 2rem;
             }
 
-            .form-control, .btn-custom {
+            .form-control,
+            .btn-custom {
                 font-size: 1rem;
                 padding: 10px 20px;
             }
@@ -196,7 +205,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 font-size: 1.8rem;
             }
 
-            .form-control, .btn-custom {
+            .form-control,
+            .btn-custom {
                 font-size: 0.9rem;
                 padding: 10px 15px;
             }
@@ -222,14 +232,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form method="POST" action="login.php">
                 <div class="form-group">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" 
-                           placeholder="Enter your email" required>
+                    <input type="email" class="form-control" id="email" name="email"
+                        placeholder="Enter your email" required>
                 </div>
 
                 <div class="form-group">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" 
-                           placeholder="Enter your password" required>
+                    <input type="password" class="form-control" id="password" name="password"
+                        placeholder="Enter your password" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-custom">Login</button>

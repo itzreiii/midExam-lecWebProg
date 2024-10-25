@@ -76,26 +76,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         body {
             background: linear-gradient(135deg, #7b2ff7, #f107a3);
             background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             background-position: center;
             color: #ffffff;
-            justify-content: center;
-            align-items: center;
+            margin: 0;
             min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .wrapper {
             width: 100%;
+            padding: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 15px;
         }
 
         .main-container {
             text-align: center;
             background-color: rgba(0, 0, 0, 0.6);
-            padding: 50px;
+            padding: 30px;
             border-radius: 20px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
             width: 100%;
@@ -104,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
             color: #fff;
         }
 
@@ -132,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         .form-group {
             text-align: left;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .form-label {
@@ -144,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-control {
             background-color: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 12px 20px;
+            padding: 8px 20px;
             border-radius: 50px;
             font-size: 1.1rem;
             color: white;
@@ -162,9 +165,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .btn-custom {
-            padding: 15px 30px;
+            padding: 10px 30px;
             font-size: 1.2rem;
-            margin: 10px 0;
+            margin: 5px 0;
             border-radius: 50px;
             width: 100%;
             transition: background-color 0.3s ease, transform 0.2s ease;
@@ -181,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         .links-section {
-            margin-top: 20px;
+            margin-top: 15px;
             font-size: 1.1rem;
         }
 
